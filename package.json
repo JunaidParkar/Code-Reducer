@@ -1,0 +1,28 @@
+{
+  "name": "myjs",
+  "version": "1.0.0",
+  "description": "Get your wesite amazing UI/UX features jyst by one line of code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JunaidParkar/myJs.git"
+  },
+  "keywords": [
+    "myjs",
+    "Myjs",
+    "myJs",
+    "my",
+    "js",
+    "UI",
+    "UX"
+  ],
+  "author": "Junaid Parkar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JunaidParkar/myJs/issues"
+  },
+  "homepage": "https://github.com/JunaidParkar/myJs#readme"
+}
