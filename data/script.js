@@ -112,13 +112,15 @@ class scripts {
     return sentence
   }
   createSequence() {
-    let a =[1,2,3]
-    const numbers = new Set(); // Use a Set to store unique numbers
-    while (numbers.size < 5) {
-      const genNum = Math.floor(Math.random() * 4) + 1;
-      numbers.add(genNum); // Add the number to the Set (automatically enforces uniqueness)
+    let numbers = Array.from(Array(5), (_, i) => i + 1);
+    let currentIndex = numbers.length,  randomIndex;
+    while (currentIndex > 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [numbers[currentIndex], numbers[randomIndex]] = [
+        numbers[randomIndex], numbers[currentIndex]];
     }
-    return Array.from(numbers); // Convert the Set back to an array
+    return numbers;
   }
 }
 

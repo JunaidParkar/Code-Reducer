@@ -70,10 +70,11 @@ class codeReducer {
   getCaptcha(captcha) {
     let c = this.scr.createCaptcha()
     let s = this.scr.createSequence()
-    // let t = this.scr.createToken({c, s})
-    let t = "hy"
-    captcha(s, c, t)
+    let t = this.scr.createToken({c, s})
+    captcha(s.join(" "), c.join(" "), t)
   }
+
+  verifyToken(sequence, captcha, token, input, result) {}
 }
 
 /**

@@ -1,9 +1,0 @@
-{
-    "compilerOptions": {
-        "target": "ES5",
-        "module": "CommonJS",
-        "declaration": true
-    },
-    "include": ["data"],
-    "exclude": ["node_modules"]
-}
