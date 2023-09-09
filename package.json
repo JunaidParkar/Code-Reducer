@@ -1,19 +1,23 @@
 {
-  "name": "myjs",
+  "name": "codereducer",
   "version": "1.0.0",
   "description": "Get your wesite amazing UI/UX features jyst by one line of code.",
   "main": "index.js",
+  "types": "index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JunaidParkar/myJs.git"
+    "url": "git+https://github.com/JunaidParkar/codereducer.git"
   },
   "keywords": [
-    "myjs",
-    "Myjs",
-    "myJs",
+    "codereducer",
+    "codereducer",
+    "codereducer",
     "my",
     "js",
     "UI",
@@ -22,7 +26,14 @@
   "author": "Junaid Parkar",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JunaidParkar/myJs/issues"
+    "url": "https://github.com/JunaidParkar/codereducer/issues"
   },
-  "homepage": "https://github.com/JunaidParkar/myJs#readme"
+  "homepage": "https://github.com/JunaidParkar/codereducer#readme",
+  "dependencies": {
+    "random-words": "^2.0.0",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "files": [
+    "data/*"
+  ]
 }

@@ -1,14 +1,15 @@
 const scripts = require("./data/script");
+const jwt = require("jsonwebtoken")
 
 /**
-  * The base class for myJs library
+  * The base class for codeReducer library
   * This library can create wonderful stuffs and can reduce your code length
   * It can create custom cursor with magnetic effect as you want (Customizable)
   * For source code visit
 */
 
 
-class myJS {
+class codeReducer {
   constructor() {
     this.scr = new scripts();
   }
@@ -31,6 +32,18 @@ class myJS {
       crsr.style.left = `${e.clientX}px`;
       crsr.style.top = `${e.clientY}px`;
       if (setMagnet) {
+        if(elementId.length <= 0) {
+          console.error("Element ID not provided")
+        } else if((treble < 0) || (treble > 1)) {
+          console.error("Treble should be between 0 to 1")
+        } else {
+          for (let i = 0; i < elementId.length; i++) {
+            if (!document.getElementById(elementId[i])) {
+              console.error(`No element with id ${elementId[i]} found`)
+              break
+            }
+          }
+        }
         let isId = true
         for (let i = 0; i < elementId.length; i++) {
           if(!document.getElementById(elementId[i])){
@@ -41,7 +54,7 @@ class myJS {
         }
         if (!isId) {
           return
-        }console.log(magneticHoverSize)
+        }
         this.scr.cursorMagnet(
           elementId,
           crsr,
@@ -53,11 +66,19 @@ class myJS {
       }
     });
   }
+
+  getCaptcha(captcha) {
+    let c = this.scr.createCaptcha()
+    let s = this.scr.createSequence()
+    // let t = this.scr.createToken({c, s})
+    let t = "hy"
+    captcha(s, c, t)
+  }
 }
 
 /**
- * @module myJS
- * @type {myJS}
+ * @module codeReducer
+ * @type {codeReducer}
  */
 
-module.exports = myJS;
+module.exports = codeReducer;

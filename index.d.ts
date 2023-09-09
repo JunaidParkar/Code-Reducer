@@ -1,10 +1,10 @@
 /**
-    * The base Module for myJs library.
-    * @description This library can create wonderful stuffs and can reduce your code length.
-    * @description It can create custom cursor with magnetic effect as you want (Customizable).
-    * @description For source code visit https://github.com/JunaidParkar/myJs
+    * The base Module for codeReducer library.
+    * This library can create wonderful stuffs and can reduce your code length.
+    * It can create custom cursor with magnetic effect as you want (Customizable).
+    * For source code visit https://github.com/JunaidParkar/codeReducer
 */
-declare class myJs {
+declare class codeReducer {
     scr: any; // add type annotation for property
     constructor(); // add type annotation for constructor
     /**
@@ -25,6 +25,12 @@ declare class myJs {
             magneticHoverSize?: number;
         }
     ): void
+    /**
+     * Create a captcha to verify human.
+     * Captcha expires within 2 minutes after generated
+     * @param {CallableFunction} [captcha] - Returns a callback with 3 parameters namely sequence, data, token
+     */
+    getCaptcha(captcha: CallableFunction): void
 }
 
-export = myJs
+export = codeReducer
