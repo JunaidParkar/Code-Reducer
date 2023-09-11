@@ -32,6 +32,7 @@ class codeReducer {
       crsr.style.left = `${e.clientX}px`;
       crsr.style.top = `${e.clientY}px`;
       if (setMagnet) {
+        let isId = true
         if(elementId.length <= 0) {
           console.error("Element ID not provided")
         } else if((treble < 0) || (treble > 1)) {
@@ -40,16 +41,9 @@ class codeReducer {
           for (let i = 0; i < elementId.length; i++) {
             if (!document.getElementById(elementId[i])) {
               console.error(`No element with id ${elementId[i]} found`)
+              isId = false
               break
             }
-          }
-        }
-        let isId = true
-        for (let i = 0; i < elementId.length; i++) {
-          if(!document.getElementById(elementId[i])){
-            console.error(`Unable to find element with id ${elementId[i]}`)
-            isId = false
-            break
           }
         }
         if (!isId) {
@@ -57,7 +51,7 @@ class codeReducer {
         }
         this.scr.cursorMagnet(
           elementId,
-          crsr,
+          crsr, 
           e.clientX,
           e.clientY,
           treble,
@@ -75,6 +69,8 @@ class codeReducer {
   }
 
   verifyToken(sequence, captcha, token, input, result) {}
+
+  createCaptcha() {}
 }
 
 /**

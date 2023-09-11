@@ -27,12 +27,13 @@ npm install codereducer
 
 Here's how you can use the `codeReducer` library in your JavaScript/TypeScript projects:
 
+Create `Custom Cursor`
+
 ```javascript
-const codeReducer = require("code-reducer");
+import codereducer from "codereducer";
 
 const cr = new codeReducer();
 
-// Create a custom cursor with magnetic effect
 cr.getCursor({
   crsrColor: "red",
   magneticEffect: {
@@ -42,16 +43,29 @@ cr.getCursor({
     magneticHoverSize: 10,
   },
 });
+```
 
-// Generate a captcha for human verification
-cr.getCaptcha((sequence, data, token) => {
-  // Handle captcha data here
-});
+Generate and verify `captcha`
 
-// Verify the captcha
-cr.verifyToken(sequence, captcha, token, input, (result) => {
-  // Handle the captcha verification result
-});
+```javascript
+import captcha from "codereducer/captcha";
+
+const generateCaptcha = () => {
+  let capt = new captcha();
+  capt.createCaptha("captchaContainer", (token, status) => {
+    if (status) {
+      // Store the token somewhere
+    }
+  });
+};
+
+const verifyCaptcha = (input) => {
+  let cr = new captcha();
+  cr.verifyCaptcha(userCaptcha, tk, (status, message) => {
+    console.log(status);
+    console.log(message);
+  });
+};
 ```
 
 ## Documentation
