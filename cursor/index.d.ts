@@ -1,11 +1,9 @@
 /**
  * Generate custom cursor
- * @method getCursor - Creates custom cursor and hide default cursor 
- */
+ * @method getCursor - Creates custom cursor and hide default cursor.
+*/
 
 declare class customCursor {
-    // scr?: any; // add type annotation for property
-    // constructor(); // add type annotation for constructor
     /**
         * Sets up the custom cursor with magnetic effect
         * @param {String} [crsrColor] - The color of the cursor

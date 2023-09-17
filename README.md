@@ -50,7 +50,7 @@ Generate and verify `captcha`
 
 ```javascript
 import captcha from "codereducer/captcha";
-const codereducer = require("codereducer/captcha"); // If using ES5
+const captcha = require("codereducer/captcha"); // If using ES5
 
 const generateCaptcha = () => {
   let capt = new captcha();
