@@ -30,9 +30,10 @@ Here's how you can use the `codeReducer` library in your JavaScript/TypeScript p
 Create `Custom Cursor`
 
 ```javascript
-import codereducer from "codereducer";
+import customCursor from "codereducer/cursor";
+const customCursor = require("codereducer/cursor"); // If using ES5
 
-const cr = new codeReducer();
+const cr = new customCursor();
 
 cr.getCursor({
   crsrColor: "red",
@@ -49,6 +50,7 @@ Generate and verify `captcha`
 
 ```javascript
 import captcha from "codereducer/captcha";
+const codereducer = require("codereducer/captcha"); // If using ES5
 
 const generateCaptcha = () => {
   let capt = new captcha();
@@ -61,10 +63,14 @@ const generateCaptcha = () => {
 
 const verifyCaptcha = (input) => {
   let cr = new captcha();
-  cr.verifyCaptcha(userCaptcha, tk, (status, message) => {
-    console.log(status);
-    console.log(message);
-  });
+  let tk = //token provided during creation on captcha
+    cr.verifyCaptcha(userCaptcha, tk, (status, message) => {
+      if (status) {
+        // Captcha verified successful
+      } else {
+        alert(message); // Captcha verification not succed
+      }
+    });
 };
 ```
 
