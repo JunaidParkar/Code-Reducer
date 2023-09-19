@@ -1,13 +1,15 @@
 /**
  * Make instance in order to work with captchas.
- * @method [createCaptcha] - Creates the captcha and gives its token as a callback. Captcha is valid only till 2m.
+ * @param {string} [canvasElement] - Pass the reference of canvas elemet.
+ * @method createCaptcha - Creates the captcha and gives its token as a callback. Captcha is valid only till 2m.
+ * @method revert - Clean up function
 */
 
 declare class captcha {
+    constructor(canvasElement: string)
     /**
      * Create the captcha.
      * @description - A captcha will be generated and appended into a wrapper and a token will be given as callback. Remember the continer innerHTML should be empty.
-     * @param {String} [containerId] - pass the ID of wrapper in which you want to append the Captcha.
      * @param {CallableFunction} [captchaToken] - Get the captcha and store it somewhere.
      * @param {(token: string, status: string) => void} [captchaToken] - A callback function to receive the captcha token and status. If status is true then only token will be passed else instead of token it will return the error text.
     */
@@ -20,6 +22,10 @@ declare class captcha {
      * @param {(status: Boolean, message: String)} [result] - status shows whether captcha is valid or not and message will show that is the error with the captcha.
      */
     verifyCaptcha(input: String, token: String, result: (status: String, message: String) => void): void
+    /**
+     * Clean up function
+     */
+    revert(): void
 }
 
 export = captcha

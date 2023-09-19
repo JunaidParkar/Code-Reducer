@@ -1,6 +1,6 @@
 {
   "name": "codereducer",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Get your wesite amazing UI/UX features jyst by one line of code.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -28,10 +28,12 @@
   },
   "homepage": "https://github.com/JunaidParkar/codereducer#readme",
   "dependencies": {
+    "gsap": "^3.12.2",
     "jsonwebtoken": "^8.5.1"
   },
   "files": [
     "data/*",
-    "captcha/*"
+    "captcha/*",
+    "canvas/*"
   ]
 }

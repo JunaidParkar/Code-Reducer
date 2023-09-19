@@ -1,9 +1,4 @@
-const scripts = require("../data/script");
-
 class customCursor {
-    constructor() {
-        this.scr = new scripts(); 
-    }
 
     getCursor(
         crsrColor = "black",
@@ -24,9 +19,9 @@ class customCursor {
             crsr.style.top = `${e.clientY}px`;
             if (setMagnet) {
                 let isId = true
-                if(elementId.length <= 0) {
+                if (elementId.length <= 0) {
                     console.error("Element ID not provided")
-                } else if((treble < 0) || (treble > 1)) {
+                } else if ((treble < 0) || (treble > 1)) {
                     console.error("Treble should be between 0 to 1")
                 } else {
                     for (let i = 0; i < elementId.length; i++) {
@@ -40,9 +35,9 @@ class customCursor {
                 if (!isId) {
                     return
                 }
-                this.scr.cursorMagnet(
+                this.cursorMagnet(
                     elementId,
-                    crsr, 
+                    crsr,
                     e.clientX,
                     e.clientY,
                     treble,
@@ -50,6 +45,39 @@ class customCursor {
                 );
             }
         });
+    }
+
+    cursorMagnet(elementID, crsr, cursorX, cursorY, treble, magneticSize,) {
+        let activeID = false;
+        for (let i = 0; i < elementID.length; i++) {
+            document.getElementById(elementID[i]).style.transform = "";
+        }
+        for (let i = 0; i < elementID.length; i++) {
+            if (document.getElementById(elementID[i])) {
+                let rect = document.getElementById(elementID[i]).getBoundingClientRect();
+                let toMagnetize = cursorX >= rect.left && cursorX <= rect.right && cursorY >= rect.top && cursorY <= rect.bottom;
+                if (toMagnetize) {
+                    activeID = elementID[i];
+                    break;
+                } else {
+                    toMagnetize = false;
+                }
+            }
+        }
+        for (let i = 0; i < elementID.length; i++) {
+            if (elementID[i] == activeID) {
+                let gbcl = document.getElementById(activeID).getBoundingClientRect();
+                let xAxis = cursorX - gbcl.left;
+                let yAxis = cursorY - gbcl.top;
+                document.getElementById(activeID).style.transform = `translateX(${xAxis * treble}px) translateY(${yAxis * treble}px)`;
+                break;
+            }
+        }
+        if (document.getElementById(activeID)) {
+            crsr.style.transform = `scale(${magneticSize})`;
+        } else {
+            crsr.style.transform = "scale(1)";
+        }
     }
 }
 
