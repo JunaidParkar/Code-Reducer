@@ -60,7 +60,7 @@ const Page = () => {
   const [userInput, setUserInput] = useState()
 
   const generateCaptcha = () => {
-    let capt = new captcha(reference);
+    let capt = new captcha(reference, "#28282B");
     capt.createCaptha(, (token, status) => {
       if (status) {
         // Store the token somewhere
@@ -106,7 +106,7 @@ export default {
     };
   },
   mounted() {
-    this.captchaInstance = new captcha(this.$refs.captchaCanvas);
+    this.captchaInstance = new captcha(this.$refs.captchaCanvas, "#28282B");
   },
   methods: {
     createCaptcha() {
