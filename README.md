@@ -5,11 +5,13 @@
 
 The base module for the `codeReducer` library.
 
-## Overview
+# Overview
 
 `Code Reducer` is a versatile JavaScript library designed to simplify and enhance your web development projects. This library offers a range of features to streamline your code and create engaging user experiences.
 
-### Key Features
+# Key Features
+
+- **Dkit**: With Dkit, manipulating the DOM becomes a breeze! Enjoy coding with Dkit.
 
 - **Custom Cursors**: Create custom cursors with magnetic effects, making your web applications visually engaging and interactive.
 
@@ -17,7 +19,7 @@ The base module for the `codeReducer` library.
 
 - **Canvas video animation**: Create video like animation using frames on videos based on scrolling.
 
-## Installation
+# Installation
 
 You can install `codeReducer` via npm:
 
@@ -25,11 +27,131 @@ You can install `codeReducer` via npm:
 npm install codereducer
 ```
 
-## Usage
+# Usage
 
 Here's how you can use the `codeReducer` library in your JavaScript/TypeScript projects:
 
-### Create `Custom Cursor`
+## Manipulate `DOM` with `Dkit`
+
+```javascript
+import Dkit from "codereducer";
+```
+
+### `API Reference`
+
+### init()
+
+This method initialize Dkit tools.
+
+```javascript
+let dkit = Dkit.init();
+```
+
+### id()
+
+This method can be used to select an element with the specified ID.
+
+```javascript
+dkit.id("myId");
+```
+
+### class()
+
+This method can be used to select an element with the specified class name.
+
+```javascript
+dkit.class("myClass");
+```
+
+### tag()
+
+This method can be used to select an element with the specified tag name.
+
+```javascript
+dkit.tag("myTag");
+```
+
+### query()
+
+This method can be used to select an element using a CSS selector.
+
+```javascript
+dkit.query(".myClass #myId");
+```
+
+### create()
+
+This method can be used to select a new HTML element with the specified tag.
+
+```javascript
+dkit.create("div");
+```
+
+### get()
+
+This method is mandatory as it returns the currently selected HTML element.
+
+```javascript
+let element = dkit.get();
+```
+
+### revert()
+
+This method can be used for cleanUp. It clears all the selected elements
+
+### `How to use in frameworks`
+
+Here's an example of how you might use Dkit to create a new `div` element, add it to the DOM, and then manipulate it:
+
+```javascript
+import Dkit from "codereducer";
+
+// Create a new div element
+let div = Dkit.init().create("div").get();
+
+// Add the div to the body of the document
+document.body.appendChild(div);
+```
+
+Now get an list of all `h3` tag from inside a `div` tag with id myDiv
+
+```javascript
+import Dkit from "codereducer";
+
+// target all h3 in div
+let h3 = Dkit.init().id("myDiv").tag("h3").get();
+```
+
+use single call for multiple manipulations
+
+```javascript
+import Dkit from "codereducer";
+
+// initialize dKit
+let kit = Dkit.init();
+
+// get first element
+let elem = init.id("scroll1").tag("canvas").get();
+
+// target second element
+let h1 = init.id("try").tag("h1");
+
+// get second element
+let elem2 = h1.get();
+
+// use all elements
+console.log(elem1); // return all the element you targetted
+console.log(elem2); // return all the element you targetted
+console.log(h1); // consoles the array or a prototype
+
+h1.revert(); // cleans up all the instances
+
+console.log(h1); // console or return null
+```
+
+With Dkit, manipulating the DOM becomes a breeze! Enjoy coding with Dkit.
+
+## Create `Custom Cursor`
 
 ```javascript
 import customCursor from "codereducer/cursor";

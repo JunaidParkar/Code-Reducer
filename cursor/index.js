@@ -10,13 +10,22 @@ class customCursor {
         } = {}
     ) {
         document.body.style.cursor = "none"
-        const crsr = document.createElement("div");
+        let crsr = document.createElement("div");
+        let crsrStyle = crsr.style
+        crsrStyle.zIndex = 99999
+        crsrStyle.height = '20px'
+        crsrStyle.width = '20px'
+        crsrStyle.borderRadius = '50%'
+        crsrStyle.mixBlendMode = 'difference'
+        crsrStyle.position = 'fixed'
+        crsrStyle.pointerEvents = 'none'
+        crsrStyle.transition = 'transform .1s ease'
         crsr.id = "myCursor10011";
-        crsr.style.background = crsrColor;
+        crsrStyle.background = crsrColor;
         document.body.appendChild(crsr);
         document.addEventListener("mousemove", (e) => {
-            crsr.style.left = `${e.clientX}px`;
-            crsr.style.top = `${e.clientY}px`;
+            crsrStyle.left = `${e.clientX}px`;
+            crsrStyle.top = `${e.clientY}px`;
             if (setMagnet) {
                 let isId = true
                 if (elementId.length <= 0) {
@@ -74,9 +83,9 @@ class customCursor {
             }
         }
         if (document.getElementById(activeID)) {
-            crsr.style.transform = `scale(${magneticSize})`;
+            crsrStyle.transform = `scale(${magneticSize})`;
         } else {
-            crsr.style.transform = "scale(1)";
+            crsrStyle.transform = "scale(1)";
         }
     }
 }
