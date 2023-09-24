@@ -2,12 +2,13 @@
  * Make instance in order to work with captchas.
  * @param {string} [canvasElement] - Pass the reference of canvas elemet.
  * @param {string} [color] - Text color for captcha
+ * @param {string} [key] -Secret key for data encryption
  * @method createCaptcha - Creates the captcha and gives its token as a callback. Captcha is valid only till 2m.
  * @method revert - Clean up function
 */
 
 declare class captcha {
-    constructor(canvasElement: string, color: string)
+    constructor(canvasElement: string, color: string, key: string)
     /**
      * Create the captcha.
      * @description - A captcha will be generated and appended into a wrapper and a token will be given as callback. Remember the continer innerHTML should be empty.

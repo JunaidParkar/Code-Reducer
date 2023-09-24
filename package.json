@@ -28,8 +28,8 @@
   },
   "homepage": "https://github.com/JunaidParkar/codereducer#readme",
   "dependencies": {
-    "gsap": "^3.12.2",
-    "jsonwebtoken": "^8.5.1"
+    "crypto": "^1.0.1",
+    "gsap": "^3.12.2"
   },
   "files": [
     "data/*",

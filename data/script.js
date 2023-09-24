@@ -1,4 +1,6 @@
-const jwt = require("jsonwebtoken")
+// const jwt = require("jsonwebtoken")
+// const { OAuth2Client } = require('google-auth-library');
+const crypto = require('crypto');
 
 /**
  * NOT FOR YOUR USE. KINDLY DONT'T USE THIS CLASS
@@ -15,33 +17,32 @@ class scripts {
     let token = password.split(".").join();
     return token;
   }
-  createToken(dataInJson) {
-    let randomToken1 = this.generateToken(100);
-    let randomToken2 = this.generateToken(100);
-    let randomToken3 = this.generateToken(100);
-    let randomToken4 = this.generateToken(100);
-    let tk = jwt.sign(dataInJson, "BJ537MumEoT1Da0iBgi5ZF0w8ZFGXxq8", {
-      expiresIn: "2m"
-    });
-    let tokenArry = tk.split(".");
-    let token = `${randomToken1}.${tokenArry[0]}.${randomToken2}.${tokenArry[2]}.${randomToken3}.${tokenArry[1]}.${randomToken4}`;
+  createToken(dataInJson, key) {
+    const cipher = crypto.createCipheriv('aes-256-cbc', key, Buffer.alloc(16, 0));
+    let token = cipher.update(JSON.stringify(dataInJson), 'utf8', 'base64');
+    token += `${cipher.final('base64')}&&tkn${Date.now() + 120000}`;
+
     return token;
   };
-  verifyToken(token) {
+  verifyToken(token, key) {
     try {
-      let tokenList = token.split(".");
-      if (tokenList.length != 7) {
-        return [false, "Invalid token"]
+      const [encryptedData, expirationTimeStr] = token.split('&&tkn');
+      const expirationTime = Number(expirationTimeStr);
+
+      // Check if the token is expired.
+      if (Date.now() > expirationTime) {
+        return [false, "Token expired"]
       }
-      let tokenPart0 = tokenList[1];
-      let tokenPart1 = tokenList[3];
-      let tokenPart2 = tokenList[5];
-      try {
-        const decoded = jwt.verify(`${tokenPart0}.${tokenPart2}.${tokenPart1}`, "BJ537MumEoT1Da0iBgi5ZF0w8ZFGXxq8");
-        return [true, decoded];
-      } catch (err) {
-        return [false, err.name];
-      }
+
+      // Decrypt the data with the decipher.
+      const decipher = crypto.createDecipheriv('aes-256-cbc', key, Buffer.alloc(16, 0));
+      const decryptedData = decipher.update(encryptedData, 'base64', 'utf8');
+      decryptedData += decipher.final('utf8');
+
+      // Parse the decrypted data as JSON.
+      const data = JSON.parse(decryptedData);
+
+      return [true, data];
     } catch (errors) {
       return [false, errors]
     }

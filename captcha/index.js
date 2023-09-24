@@ -1,7 +1,8 @@
 const scripts = require('../data/script')
 
 class captcha {
-    constructor(canvasElement, color) {
+    constructor(canvasElement, color, key) {
+        this.secret = key
         this.canvas = canvasElement
         this.scripts = new scripts()
         this.ctx = this.canvas.getContext("2d")
@@ -21,11 +22,11 @@ class captcha {
         this.ctx.textAlign = 'center';
         this.canvas.style.margin = 0
         this.ctx.fillText(puzzle, this.canvas.width / 2, this.canvas.height / 2);
-        let token = this.scripts.createToken({ captcha: puzzle })
+        let token = this.scripts.createToken({ captcha: puzzle }, this.secret)
         captchaToken(token, true);
     }
     verifyCaptcha(input, token, result) {
-        let t = this.scripts.verifyToken(token)
+        let t = this.scripts.verifyToken(token, this.secret)
         let [status, message] = t
         if (status) {
             let data = message.captcha
