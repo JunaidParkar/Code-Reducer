@@ -6,7 +6,7 @@ declare namespace kit {
         query(selector: string): this;
         create(tag: string): this;
         get(): HTMLElement | null;
-        revert(): this; // Added cleanup function
+        revert(): this;
     }
 }
 

@@ -1,36 +1,26 @@
-// /**
-//  * Generate custom cursor
-//  * @method getCursor - Creates custom cursor and hide default cursor.
-// */
-
-// declare class customCursor {
-//     /**
-//         * Sets up the custom cursor with magnetic effect
-//         * @param {String} [crsrColor] - The color of the cursor
-//         * @param {Object} [magneticEffect] - The options for the magnetic effect
-//         * @param {Boolean} [magneticEffect.setMagnet] - Define whether to set magnetic effect or not
-//         * @param {Array} [magneticEffect.elementId] - The id's of the elements that will have the magnetic effect
-//         * @param {Number} [magneticEffect.treble] - The intensity of the magnetic effect between 0.1 to 1 only.
-//         * @param {Number} [magneticEffect.magneticHoverSize] - The size of the hover area for the magnetic effect
-//     */
-//     getCursor(
-//         crsrColor?: String,
-//         magneticEffect?: {
-//             setMagnet?: Boolean;
-//             elementId?: String[];
-//             treble?: Number;
-//             magneticHoverSize?: Number;
-//         }
-//     ): void
-// }
-
-// export = customCursor
+/**
+ * Generate custom cursor
+ * @param {string} [cursor] - Reference of the element you want to make a cursor
+ * @param {boolean} [custom] - True if you want to style the custom cursor by yourself else set to false for default custom cursor.
+ * @method getCursor - Creates custom cursor and hide default cursor.
+ * @method makeMagnet - Creates a magnetic effect on element
+ * @method revert - A clean up function for all animations performed
+*/
 
 declare class customCursor {
     constructor(cursor: string, custom?: boolean)
-    addMagnet(reference: string): void
+    /**
+     * Get the cursor 
+     */
     getCursor(): void
-    makeMagnet(): void
+    /**
+     * Get the magnetic effect on the elements you want
+     * @param {[]} [refArray] - Pass the array of all the references of elements you want to magnetise
+     */
+    makeMagnet(refArray: []): void
+    /**
+     * A clean up function used before unmounting
+     */
     revert(): void
 }
 
