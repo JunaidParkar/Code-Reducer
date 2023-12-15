@@ -6,12 +6,14 @@
  */
 
 declare class handleImage {
-    /**
-     * Creates file containing names of all images in directory.
-     * Kindly after getting the list remember to add proper paths.
-     * If you are using in any framework remember to create a folder inside public folder and paste all the images there.
-     * @param {string} [imageFolder] - Full path of directory where all the Images are available
-     * @param {string} [destFolder] - Full path of directory where you want to create file.
-     */
-    createImageList(imageFolder: string, destFolder: string): void
+  /**
+   * Creates file containing names of all images in directory.
+   * Kindly after getting the list remember to add proper paths.
+   * If you are using in any framework remember to create a folder inside public folder and paste all the images there.
+   * @param {string} [imageFolder] - Full path of directory where all the Images are available
+   * @param {string} [destFolder] - Full path of directory where you want to create file.
+   */
+  createImageList(imageFolder: string, destFolder: string): void;
 }
+
+export default handleImage;

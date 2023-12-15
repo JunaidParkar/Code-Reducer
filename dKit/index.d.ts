@@ -1,17 +1,17 @@
 declare namespace kit {
-    interface Instance {
-        id(id: string): this;
-        class(className: string): this;
-        tag(tagName: string): this;
-        query(selector: string): this;
-        create(tag: string): this;
-        get(): HTMLElement | null;
-        revert(): this;
-    }
+  interface Instance {
+    id(id: string): this;
+    class(className: string): this;
+    tag(tagName: string): this;
+    query(selector: string): this;
+    create(tag: string): this;
+    get(): HTMLElement | null;
+    revert(): this;
+  }
 }
 
 declare const Dkit: {
-    init(): kit.Instance;
+  init(): kit.Instance;
 };
 
-export = Dkit;
+export default Dkit;

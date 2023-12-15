@@ -1,20 +1,24 @@
-const gsap = require("gsap").gsap
-const ScrollTrigger = require("gsap/ScrollTrigger").ScrollTrigger
+// const gsap = require("gsap").gsap;
+// const ScrollTrigger = require("gsap/ScrollTrigger").ScrollTrigger;
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+
+// gsap.registerPlugin(ScrollTrigger);
 
 class CanvasLoader {
   constructor(canvasElement, frames, percentToScroll) {
     this.canvas = canvasElement;
     this.frames = frames;
-    this.ctx = this.canvas.getContext('2d');
+    this.ctx = this.canvas.getContext("2d");
     this.frame = 0;
     this.scrollEnd = percentToScroll;
     this.images = [];
-    this.animation = undefined
+    this.animation = undefined;
   }
 
   preloadImages(frames) {
     return Promise.all(
-      frames.map(src => {
+      frames.map((src) => {
         return new Promise((resolve, reject) => {
           const img = new Image();
           img.onload = () => {
@@ -31,10 +35,13 @@ class CanvasLoader {
   createCanvas() {
     this.resizeCanvas();
     this.drawFrame(this.frame);
-    window.addEventListener('resize', this.debounce(() => {
-      this.resizeCanvas();
-      this.drawFrame(Math.floor(this.frame));
-    }, 250));
+    window.addEventListener(
+      "resize",
+      this.debounce(() => {
+        this.resizeCanvas();
+        this.drawFrame(Math.floor(this.frame));
+      }, 250)
+    );
 
     // Store a reference to the animation
     this.animation = gsap.to(this, {
@@ -46,13 +53,16 @@ class CanvasLoader {
         start: `top top`,
         end: `${this.scrollEnd}% top`,
       },
-      onUpdate: () => this.drawFrame(Math.floor(this.frame))
+      onUpdate: () => this.drawFrame(Math.floor(this.frame)),
     });
   }
 
   drawFrame(frameIndex) {
     let img = this.images[frameIndex];
-    let scale = Math.min(this.canvas.width / img.width, this.canvas.height / img.height);
+    let scale = Math.min(
+      this.canvas.width / img.width,
+      this.canvas.height / img.height
+    );
     let x = (this.canvas.width - img.width * scale) / 2;
     let y = (this.canvas.height - img.height * scale) / 2;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -91,4 +101,4 @@ class CanvasLoader {
   }
 }
 
-module.exports = CanvasLoader;
+export default CanvasLoader;

@@ -10,15 +10,15 @@
  */
 
 declare class canvasLoader {
-    constructor(canvasElement: string, frames: string[], percentToScroll: number)
-    /**
-     * Initialize your canvas element.
-     */
-    init(): void
-    /**
-     * Cleanup the animation
-     */
-    revert(): void
+  constructor(canvasElement: string, frames: string[], percentToScroll: number);
+  /**
+   * Initialize your canvas element.
+   */
+  init(): void;
+  /**
+   * Cleanup the animation
+   */
+  revert(): void;
 }
 
-export = canvasLoader
+export default canvasLoader;
