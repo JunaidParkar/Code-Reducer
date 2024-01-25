@@ -1,9 +1,5 @@
-// const gsap = require("gsap").gsap;
-// const ScrollTrigger = require("gsap/ScrollTrigger").ScrollTrigger;
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-
-// gsap.registerPlugin(ScrollTrigger);
 
 class CanvasLoader {
   constructor(canvasElement, frames, percentToScroll) {

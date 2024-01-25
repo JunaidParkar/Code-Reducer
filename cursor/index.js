@@ -1,6 +1,4 @@
-// var gsap = require("gsap").gsap;
 import gsap from "gsap";
-// var gsapAll = require("gsap/all");
 import { Power2 } from "gsap";
 
 class customCursor {
