@@ -1,5 +1,3 @@
-// const scripts = require("../data/script");
-
 import scripts from "../data/script";
 
 class captcha {
