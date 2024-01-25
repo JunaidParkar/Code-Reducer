@@ -3,7 +3,7 @@
 import scripts from "../data/script";
 
 class captcha {
-  constructor(canvasElement, color, key) {
+  constructor(canvasElement = null, color = null, key = null) {
     this.secret = key;
     this.canvas = canvasElement;
     this.scripts = new scripts();
@@ -23,23 +23,36 @@ class captcha {
     this.ctx.textAlign = "center";
     this.canvas.style.margin = 0;
     this.ctx.fillText(puzzle, this.canvas.width / 2, this.canvas.height / 2);
-    let token = this.scripts.createToken({ captcha: puzzle }, this.secret);
-    captchaToken(token, true);
+    this.scripts
+      .createToken({ captcha: puzzle }, this.secret)
+      .then((tk) => {
+        captchaToken(tk, true);
+      })
+      .catch((er) => {
+        captchaToken(er, false);
+      });
   }
   verifyCaptcha(input, token, result) {
-    let t = this.scripts.verifyToken(token, this.secret);
-    let [status, message] = t;
-    if (status) {
-      let data = message.captcha;
-      if (data == input) {
-        result(true, "Success");
-      } else {
-        result(false, "Wrong captcha");
-      }
-    } else {
-      result(false, message);
-    }
+    this.scripts.verifyToken(token, this.secret)
+      .then((t) => {
+        let [status, message] = t;
+        if (status) {
+          let data = message.captcha;
+          if (data == input) {
+            result(true, "Success");
+          } else {
+            result(false, "Wrong captcha");
+          }
+        } else {
+          result(false, message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error verifying captcha:", error);
+        result(false, "Error verifying captcha");
+      });
   }
+  
   revert() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }

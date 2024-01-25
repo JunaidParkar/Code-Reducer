@@ -2,11 +2,11 @@
 // const { OAuth2Client } = require('google-auth-library');
 // const crypto = require("crypto");
 // import crypto from "crypto";
-import crypto from "crypto-browserify";
-import { Buffer } from "buffer";
+// import crypto from "crypto-browserify";
+// import { Buffer } from "buffer";
 
 // import { Buffer } from 'buffer';
-global.Buffer = Buffer;
+// global.Buffer = Buffer;
 
 /**
  * NOT FOR YOUR USE. KINDLY DONT'T USE THIS CLASS
@@ -24,20 +24,33 @@ class scripts {
     let token = password.split(".").join();
     return token;
   }
-  createToken(dataInJson, key) {
-    const cipher = crypto.createCipheriv(
-      "aes-256-cbc",
-      key,
-      Buffer.alloc(16, 0)
+  async createToken(dataInJson, key) {
+    const encoder = new TextEncoder();
+    const encodedData = encoder.encode(JSON.stringify(dataInJson));
+
+    const cryptoKey = await window.crypto.subtle.importKey(
+      "raw",
+      encoder.encode(key),
+      { name: "AES-CBC" },
+      false,
+      ["encrypt"]
     );
-    let token = cipher.update(JSON.stringify(dataInJson), "utf8", "base64");
-    token += `${cipher.final("base64")}&&tkn${Date.now() + 120000}`;
+
+    const encryptedData = await window.crypto.subtle.encrypt(
+      { name: "AES-CBC", iv: new Uint8Array(16) },
+      cryptoKey,
+      encodedData
+    );
+
+    const base64EncryptedData = btoa(String.fromCharCode(...new Uint8Array(encryptedData)));
+    const token = `${base64EncryptedData}&&tkn${Date.now() + 120000}`;
 
     return token;
   }
-  verifyToken(token, key) {
+
+  async verifyToken(token, key) {
     try {
-      const [encryptedData, expirationTimeStr] = token.split("&&tkn");
+      const [base64EncryptedData, expirationTimeStr] = token.split("&&tkn");
       const expirationTime = Number(expirationTimeStr);
 
       // Check if the token is expired.
@@ -45,17 +58,23 @@ class scripts {
         return [false, "Token expired"];
       }
 
-      // Decrypt the data with the decipher.
-      const decipher = crypto.createDecipheriv(
-        "aes-256-cbc",
-        key,
-        Buffer.alloc(16, 0)
+      const cryptoKey = await window.crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(key),
+        { name: "AES-CBC" },
+        false,
+        ["decrypt"]
       );
-      const decryptedData = decipher.update(encryptedData, "base64", "utf8");
-      decryptedData += decipher.final("utf8");
 
-      // Parse the decrypted data as JSON.
-      const data = JSON.parse(decryptedData);
+      const encryptedData = new Uint8Array(atob(base64EncryptedData).split('').map(char => char.charCodeAt(0)));
+      const decryptedData = await window.crypto.subtle.decrypt(
+        { name: "AES-CBC", iv: new Uint8Array(16) },
+        cryptoKey,
+        encryptedData
+      );
+
+      const decodedData = new TextDecoder().decode(decryptedData);
+      const data = JSON.parse(decodedData);
 
       return [true, data];
     } catch (errors) {

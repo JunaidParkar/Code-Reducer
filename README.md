@@ -242,38 +242,84 @@ export default function Home() {
 ### In `React/Next JS`
 
 ```javascript
-import React, { useRef, useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
 import captcha from "codereducer/captcha";
+import './App.css'
 
-const Page = () => {
-  const reference = useRef(null)
-  const [userInput, setUserInput] = useState()
+function App() {
+  const [userInput, setUserInput] = useState('');
+  const [tk, setTk] = useState(null);
+  const reference = useRef(null);
 
   const generateCaptcha = () => {
-    let capt = new captcha(reference, "#28282B");
-    capt.createCaptha(, (token, status) => {
-      if (status) {
-        // Store the token somewhere
-      }
+    return new Promise((resolve, reject) => {
+      let capt = new captcha(reference.current, '#f5f5f5', '6rRwhBidAD0dME9mSo8Rr88F9A8TLVcR');
+      capt.createCaptha((token, status) => {
+        if (status) {
+          console.log(token);
+          setTk(token);
+          resolve(token);
+        } else {
+          reject('Error generating captcha');
+        }
+      });
     });
   };
 
-  const verifyCaptcha = () => {
-    let cr = new captcha();
-    let tk = //token provided during creation on captcha
+  const verifyCaptcha = async () => {
+      await generateCaptcha(); // Wait for the token to be generated
+      let cr = new captcha(reference.current, '#f5f5f5', '6rRwhBidAD0dME9mSo8Rr88F9A8TLVcR');
       cr.verifyCaptcha(userInput, tk, (status, message) => {
         if (status) {
-          // Captcha verified successful
+          // Captcha verified successfully
+          console.log('verified');
         } else {
-          // Captcha verification not succed
+          console.log('failed');
+          // Captcha verification not successful
         }
       });
   };
 
-  return(<canvas ref={reference}></canvas>)
+  const updater = (e) => {
+    setUserInput(e.target.value);
+  };
+
+  const submit = () => {
+    verifyCaptcha();
+  };
+
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
+
+  return (
+    <>
+      <div>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <input type="text" onChange={(e) => {updater(e)}} />
+      <button onClick={() => submit()}>click</button>
+      <div className="card">
+        <canvas ref={reference}></canvas>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  )
 }
 
-export.default = Page
+export default App
 ```
 
 ### In `Vue JS`
