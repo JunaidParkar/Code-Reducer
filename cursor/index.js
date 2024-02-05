@@ -2,22 +2,24 @@ import gsap from "gsap";
 import { Power2 } from "gsap";
 
 class customCursor {
-  constructor(cursor, custom = false, mediaSize = "520px") {
+  constructor(cursor, custom = false, mediaSize = 520) {
     this.cursor = cursor;
     this.custom = custom;
     this.magnetElement = [];
     this.isMagnetActive = false;
     this.mediaSize = mediaSize;
-    this.toPerform = null
-    window.onresize(() => {
-      if (window.innerWidth < this.mediaSize) {
-        if (this.cursor) {
-          this.cursor.style.display = "none"
-        }
-        this.toPerform = null
+    this.toPerform = window.innerWidth < this.mediaSize ? false : true
+    window.addEventListener("resize", () => this.setPerformance())
+  }
+  setPerformance() {
+    if (window.innerWidth < this.mediaSize) {
+      if (this.cursor) {
+        this.cursor.style.display = "none"
       }
-    })
-    if (window.innerWidth < this.mediaSize) {this.toPerform = null} else this.toPerform = true
+      this.toPerform = false
+    } else {
+      this.toPerform = true
+    }
   }
   lerp(x, y, a) {
     return x * (1 - a) + y * a;
@@ -72,7 +74,7 @@ class customCursor {
         duration: 1,
         ease: Power2.easeOut,
       });
-      gsap.to(".bui3o87r3r78ry3", {
+      gsap.to(this.cursor, {
         scale: 4,
         duration: 1,
         ease: Power2.easeOut,
@@ -86,7 +88,7 @@ class customCursor {
         duration: 1,
         ease: Power2.easeOut,
       });
-      gsap.to(".bui3o87r3r78ry3", {
+      gsap.to(this.cursor, {
         scale: 1,
         duration: 1,
         ease: Power2.easeOut,
@@ -113,6 +115,7 @@ class customCursor {
     }
   }
   getCursor() {
+    console.log(this.toPerform, window.innerWidth, this.mediaSize)
     if (this.cursor && this.toPerform) {
       if (!this.custom) {
         this.createCursor();
@@ -129,8 +132,12 @@ class customCursor {
       document.addEventListener("mouseleave", () =>
         this.cursor ? (this.cursor.style.opacity = 0) : ""
       );
+    } else {
+      document.body.style.cursor = "default"
+      if (this.cursor) {
+        this.cursor.style.display = "none"
+      }
     }
-    document.body.style.cursor = "default"
   }
   revert() {
     document.body.style.cursor = "auto";
@@ -146,6 +153,7 @@ class customCursor {
     this.magnetElement = [];
     document.removeEventListener("mousemove", (e) => this.magneticEffect(e));
     this.isMagnetActive = null;
+    window.removeEventListener("resize", () => this.setPerformance())
   }
 }
 
