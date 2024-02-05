@@ -2,11 +2,22 @@ import gsap from "gsap";
 import { Power2 } from "gsap";
 
 class customCursor {
-  constructor(cursor, custom = false) {
+  constructor(cursor, custom = false, mediaSize = "520px") {
     this.cursor = cursor;
     this.custom = custom;
     this.magnetElement = [];
     this.isMagnetActive = false;
+    this.mediaSize = mediaSize;
+    this.toPerform = null
+    window.onresize(() => {
+      if (window.innerWidth < this.mediaSize) {
+        if (this.cursor) {
+          this.cursor.style.display = "none"
+        }
+        this.toPerform = null
+      }
+    })
+    if (window.innerWidth < this.mediaSize) {this.toPerform = null} else this.toPerform = true
   }
   lerp(x, y, a) {
     return x * (1 - a) + y * a;
@@ -84,7 +95,7 @@ class customCursor {
   }
 
   makeMagnet(refArray) {
-    if (document.querySelector(".bui3o87r3r78ry3")) {
+    if (this.toPerform) {
       if (refArray.length > 0) {
         refArray.forEach((refs) => {
           if (refs) {
@@ -102,21 +113,24 @@ class customCursor {
     }
   }
   getCursor() {
-    if (!this.custom) {
-      this.createCursor();
+    if (this.cursor && this.toPerform) {
+      if (!this.custom) {
+        this.createCursor();
+      }
+      this.cursor ? (this.cursor.style.opacity = 0) : "";
+      this.cursor ? this.cursor.classList.add("bui3o87r3r78ry3") : "";
+      document.body.style.cursor = "none";
+      document.addEventListener("mouseenter", () =>
+        this.cursor ? (this.cursor.style.opacity = 1) : ""
+      );
+      document.addEventListener("mousemove", (e) => {
+        this.moveCursor(e);
+      });
+      document.addEventListener("mouseleave", () =>
+        this.cursor ? (this.cursor.style.opacity = 0) : ""
+      );
     }
-    this.cursor ? (this.cursor.style.opacity = 0) : "";
-    this.cursor ? this.cursor.classList.add("bui3o87r3r78ry3") : "";
-    document.body.style.cursor = "none";
-    document.addEventListener("mouseenter", () =>
-      this.cursor ? (this.cursor.style.opacity = 1) : ""
-    );
-    document.addEventListener("mousemove", (e) => {
-      this.moveCursor(e);
-    });
-    document.addEventListener("mouseleave", () =>
-      this.cursor ? (this.cursor.style.opacity = 0) : ""
-    );
+    document.body.style.cursor = "default"
   }
   revert() {
     document.body.style.cursor = "auto";

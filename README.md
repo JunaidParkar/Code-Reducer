@@ -34,7 +34,7 @@ Here's how you can use the `codeReducer` library in your JavaScript/TypeScript p
 ## Manipulate `DOM` with `Dkit`
 
 ```javascript
-import Dkit from "codereducer";
+import Dkit from "codereducer/dkit";
 ```
 
 ### `API Reference`
@@ -104,7 +104,7 @@ This method can be used for cleanUp. It clears all the selected elements
 Here's an example of how you might use Dkit to create a new `div` element, add it to the DOM, and then manipulate it:
 
 ```javascript
-import Dkit from "codereducer";
+import Dkit from "codereducer/dkit";
 
 // Create a new div element
 let div = Dkit.init().create("div").get();
@@ -116,7 +116,7 @@ document.body.appendChild(div);
 Now get an list of all `h3` tag from inside a `div` tag with id myDiv
 
 ```javascript
-import Dkit from "codereducer";
+import Dkit from "codereducer/dkit";
 
 // target all h3 in div
 let h3 = Dkit.init().id("myDiv").tag("h3").get();
@@ -125,7 +125,7 @@ let h3 = Dkit.init().id("myDiv").tag("h3").get();
 use single call for multiple manipulations
 
 ```javascript
-import Dkit from "codereducer";
+import Dkit from "codereducer/dkit";
 
 // initialize dKit
 let kit = Dkit.init();
@@ -404,7 +404,7 @@ export default {
      ```javascript
      const { handleImage } = require("codereducer/handleImages");
 
-     handleImage(pathToFrames, outputPath);
+     new handleImage.createImageList(pathToFrames, outputPath);
      ```
 
      Replace `pathToFrames` with the full path to the directory containing your extracted frames and `outputPath` with the desired output directory for the array of image names.
