@@ -409,31 +409,35 @@ export default {
 
      Replace `pathToFrames` with the full path to the directory containing your extracted frames and `outputPath` with the desired output directory for the array of image names.
 
-6. **Run the Node.js Script:**
+6. **Edit package.json:**
+
+   - Add `json"type": "module"` in package.json.
+
+7. **Run the Node.js Script:**
 
    - Run the Node.js script to generate a file named `listImages101.js` containing an array with image names in series.
 
-7. **Organize Images in Your Project:**
+8. **Organize Images in Your Project:**
 
    - Copy all the extracted images to your project's public directory. Create a folder (e.g., "xyz") and place the images inside this folder.
 
-8. **Start Your Project Server:**
+9. **Start Your Project Server:**
 
    - Start your project server.
 
-9. **Access Images in Your Browser:**
+10. **Access Images in Your Browser:**
 
    - Navigate to `http://yourprojecturl/xyz/imageName.jpg` to confirm that the images render correctly.
 
-10. **Create an `images.js` File:**
+11. **Create an `images.js` File:**
 
     - In your project's `components` folder, create a file named `images.js`.
 
-11. **Update `images.js` with Image Array:**
+12. **Update `images.js` with Image Array:**
 
     - Update `images.js` with the image array obtained in step 6, adding the prefix `/xyz/` to each image path.
 
-12. **Example `images.js`:**
+13. **Example `images.js`:**
 
     ```javascript
     export default [
@@ -443,7 +447,7 @@ export default {
     ];
     ```
 
-13. **Implementation Ready:**
+14. **Implementation Ready:**
     - Your project is now set up and ready to use for creating a parallax animation using the generated image array.
 
 ## Animate `canvas parallex`

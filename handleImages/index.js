@@ -1,6 +1,4 @@
-try {
-  import fs from "fs";
-} catch {}
+import fs from "fs";
 
 class handleImage {
   async createImageList(imageFolder, destFolder) {
