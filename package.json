@@ -1,6 +1,6 @@
 {
   "name": "codereducer",
-  "version": "1.1.91",
+  "version": "1.2.0",
   "description": "Get your wesite amazing UI/UX features jyst by one line of code.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -20,7 +20,10 @@
     "Code Reducer",
     "code reducer",
     "UI",
-    "UX"
+    "UX",
+    "tool kit",
+    "frameworks",
+    "javascript"
   ],
   "author": "Junaid Parkar",
   "license": "ISC",
@@ -37,6 +40,7 @@
     "canvas/*",
     "cursor/*",
     "dkit/*",
-    "handleImages/*"
+    "handleImages/*",
+    "artex/*"
   ]
 }
