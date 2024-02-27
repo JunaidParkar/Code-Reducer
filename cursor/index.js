@@ -115,7 +115,6 @@ class customCursor {
     }
   }
   getCursor() {
-    console.log(this.toPerform, window.innerWidth, this.mediaSize)
     if (this.cursor && this.toPerform) {
       if (!this.custom) {
         this.createCursor();
