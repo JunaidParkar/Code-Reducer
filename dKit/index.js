@@ -56,4 +56,6 @@ class Dkit {
   }
 }
 
-export default Dkit;
+if (typeof exports != undefined) {
+  export default Dkit
+}

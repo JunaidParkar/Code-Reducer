@@ -100,4 +100,6 @@ class ChatBot {
   }
 }
 
-export default ChatBot
+if (typeof exports != undefined) {
+  export default ChatBot
+}
