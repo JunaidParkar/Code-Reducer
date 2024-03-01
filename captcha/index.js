@@ -73,6 +73,9 @@ class scripts {
   }
 }
 
+
+
+
 class captcha {
   constructor(canvasElement = null, color = null, key = null) {
     this.secret = key;
@@ -129,6 +132,4 @@ class captcha {
   }
 }
 
-if (typeof exports != undefined) {
-  export default captcha
-}
+export default captcha;

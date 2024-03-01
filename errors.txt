@@ -1,3 +1,0 @@
-captcha verification: 
-    "TokenExpiredError":- Token expired
-    "Invalid token":- Provided token is not valid

@@ -156,6 +156,4 @@ class customCursor {
   }
 }
 
-// if (typeof exports != undefined) {
-//   export default customCursor
-// }
+export default customCursor;
