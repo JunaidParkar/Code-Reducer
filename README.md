@@ -17,7 +17,7 @@ The base module for the `codeReducer` library.
 
 - **Captcha Generation**: Generate captchas to verify human users and enhance security in your applications. Captchas expire within 2 minutes after generation.
 
-- **Canvas video animation**: Create video like animation using frames on videos based on scrolling.
+- **Artex**: Create an Chat bit just by creating a normal dataset. Get a fully functional chatbot assistant for your projects within just few lines of code. This is just a miniature version of A.R.T.E.X AI (under development, not yet released)
 
 # Installation
 
@@ -27,27 +27,37 @@ You can install `codeReducer` via npm:
 npm install codereducer
 ```
 
+Can use it with HTML by including our CDN. Every features has its own CDN to make your code light weight.Make sure to add all CDN in body tag before all the script tags.
+
 # Usage
 
-Here's how you can use the `codeReducer` library in your JavaScript/TypeScript projects:
+Here's how you can use the `codeReducer` library in your JavaScript projects:
 
 ## Manipulate `DOM` with `Dkit`
+
+****In frameworks import using****
 
 ```javascript
 import Dkit from "codereducer/dkit";
 ```
 
-### `API Reference`
+****To use dkit in HTML use this CDN.****
 
-### init()
+```HTML
+<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/dkit/index.js" />
+```
 
-This method initialize Dkit tools.
+***To use dkit here are the methods***
+
+**init()**
+
+This method initialize Dkit (DOM kit) tools.
 
 ```javascript
 let dkit = Dkit.init();
 ```
 
-### id()
+**id()**
 
 This method can be used to select an element with the specified ID.
 
@@ -55,7 +65,7 @@ This method can be used to select an element with the specified ID.
 dkit.id("myId");
 ```
 
-### class()
+**class()**
 
 This method can be used to select an element with the specified class name.
 
@@ -63,7 +73,7 @@ This method can be used to select an element with the specified class name.
 dkit.class("myClass");
 ```
 
-### tag()
+**tag()**
 
 This method can be used to select an element with the specified tag name.
 
@@ -71,7 +81,7 @@ This method can be used to select an element with the specified tag name.
 dkit.tag("myTag");
 ```
 
-### query()
+**query()**
 
 This method can be used to select an element using a CSS selector.
 
@@ -79,7 +89,7 @@ This method can be used to select an element using a CSS selector.
 dkit.query(".myClass #myId");
 ```
 
-### create()
+**create()**
 
 This method can be used to select a new HTML element with the specified tag.
 
@@ -87,7 +97,7 @@ This method can be used to select a new HTML element with the specified tag.
 dkit.create("div");
 ```
 
-### get()
+**get()**
 
 This method is mandatory as it returns the currently selected HTML element.
 
@@ -95,17 +105,27 @@ This method is mandatory as it returns the currently selected HTML element.
 let element = dkit.get();
 ```
 
-### revert()
+**revert()**
 
 This method can be used for cleanUp. It clears all the selected elements
 
-### `How to use in frameworks`
+****`How to use in frameworks`****
 
 Here's an example of how you might use Dkit to create a new `div` element, add it to the DOM, and then manipulate it:
 
 ```javascript
 import Dkit from "codereducer/dkit";
+```
 
+or
+
+```HTML
+<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/dkit/index.js" />
+```
+
+Now use like this
+
+```javascript
 // Create a new div element
 let div = Dkit.init().create("div").get();
 
@@ -116,8 +136,6 @@ document.body.appendChild(div);
 Now get an list of all `h3` tag from inside a `div` tag with id myDiv
 
 ```javascript
-import Dkit from "codereducer/dkit";
-
 // target all h3 in div
 let h3 = Dkit.init().id("myDiv").tag("h3").get();
 ```
@@ -153,58 +171,45 @@ With Dkit, manipulating the DOM becomes a breeze! Enjoy coding with Dkit.
 
 ## Create `Custom Cursor`
 
-1. To create a custom cursor in all the routes, Create a component file. Lets assume it as cursor.jsx
+1. First import `custom cursor` in framework via
 
 ```javascript
-"use client";
-import customCursor from "codereducer/cursor";
-import React, { useEffect, useRef } from "react";
-
-const Cursor = () => {
-  let crsr = useRef(null);
-  useEffect(() => {
-    let c = new customCursor(crsr.current, false); // change the second parameter to true if you want to customize the stylesheet of your custom cursor.
-    c.getCursor();
-    return () => {
-      c.revert();
-    };
-  }, []);
-
-  return <div ref={crsr}></div>;
-};
-
-export default Cursor;
+import CustomCursor from "codereducer/cursor"
 ```
 
-2. Now in your main entry file of your framework perform this code. In this case it is Next JS is used
+or use this CDN
+
+```HTML
+<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/cursor/index.js"to />
+```
+
+2. To use it just use it like this
 
 ```javascript
-import Cursor from "@/components/cursor";
-import "./globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata = {
-  title: "Create Next App",
-  description: "Generated by create next app",
-};
-
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        {<Cursor />}
-        {children}
-      </body>
-    </html>
-  );
-}
+let dom = Dkit.init()
+dom.id("cursor-element") // an empty div element
+let c = new CustomCursor(dom.get(), false)
+c.getCursor()
+dom.revert()
 ```
 
-### Create a magnetic effect after adding custom cursor.
+3. Only if using any framework you need to use an clean up function that will be 
+
+```javascript
+c.revert()
+```
+
+**Create a magnetic effect after adding custom cursor.**
 
 `Note: Custom cursor is mandatory in order to make magnetic effect`
+
+```javascript
+let magneticElements = [document.getElementById("elem1"), document.getElementById("elem2")]
+
+c.makeMagnet(magneticElements)
+```
+
+if using frame works then for sure you will use References. And this can be implemented by
 
 ```javascript
 'use client'
@@ -223,6 +228,7 @@ export default function Home() {
 
   useEffect(() => {
     let c = new customCursor()
+    c.getCursor()
     c.makeMagnet(myRef.current)
     return () => {
       c.revert()
@@ -238,299 +244,51 @@ export default function Home() {
 
 ## Generate and verify `captcha`
 
-### In `React/Next JS`
+1. First import using
 
 ```javascript
-import { useState, useRef, useEffect } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import captcha from "codereducer/captcha";
-import "./App.css";
+import captcha from "codereducer/captcha"
+```
 
-function App() {
-  const [userInput, setUserInput] = useState("");
-  const [tk, setTk] = useState(null);
-  const reference = useRef(null);
+for CDN use
 
-  const generateCaptcha = () => {
-    return new Promise((resolve, reject) => {
-      let capt = new captcha(
-        reference.current,
-        "#f5f5f5",
-        "6rRwhBidAD0dME9mSo8Rr88F9A8TLVcR"
-      );
-      capt.createCaptha((token, status) => {
-        if (status) {
-          console.log(token);
-          setTk(token);
-          resolve(token);
-        } else {
-          reject("Error generating captcha");
-        }
-      });
-    });
-  };
+```HTML
+<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/captcha/index.js" />
+```
 
-  const verifyCaptcha = async () => {
-    await generateCaptcha(); // Wait for the token to be generated
-    let cr = new captcha(
-      reference.current,
-      "#f5f5f5",
-      "6rRwhBidAD0dME9mSo8Rr88F9A8TLVcR"
-    );
-    cr.verifyCaptcha(userInput, tk, (status, message) => {
-      if (status) {
+2. Initialize captcha
+
+```javascript
+let dom = Dkit.init()
+dom.id("canvas-tag")
+// let capt = new captcha(dom.get(), "any colour for captcha font", "any 128 bit key")
+let capt = new captcha(dom.get(), "#f5f5f5", "6rRwhBidAD0dME9mSo8Rr88F9A8TLVcR")
+dom.revert()
+```
+
+3. Generate captcha
+
+```javascript
+capt.createCaptha((token, status) => {
+    if (status) {
+        // store the token some where
+    } else {
+        reject("Error generating captcha");
+    }
+});
+```
+
+4. Verify captcha
+
+```javascript
+cr.verifyCaptcha("userInput", "token", (status, message) => {
+    if (status) {
         // Captcha verified successfully
-        console.log("verified");
-      } else {
+    } else {
         console.log("failed");
         // Captcha verification not successful
-      }
-    });
-  };
-
-  const updater = (e) => {
-    setUserInput(e.target.value);
-  };
-
-  const submit = () => {
-    verifyCaptcha();
-  };
-
-  useEffect(() => {
-    generateCaptcha();
-  }, []);
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <input
-        type="text"
-        onChange={(e) => {
-          updater(e);
-        }}
-      />
-      <button onClick={() => submit()}>click</button>
-      <div className="card">
-        <canvas ref={reference}></canvas>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
-}
-
-export default App;
-```
-
-### In `Vue JS`
-
-```javascript
-<template>
-  <div>
-    <canvas ref="captchaCanvas"></canvas>
-  </div>
-</template>
-
-<script>
-import captcha from "codereducer/captcha";
-export default {
-  data() {
-    return {
-      captchaInstance: null,
-      userInput: "",
-      token: null,
-    };
-  },
-  mounted() {
-    this.captchaInstance = new captcha(this.$refs.captchaCanvas, "#28282B");
-  },
-  methods: {
-    createCaptcha() {
-      this.captchaInstance.createCaptha((token, success) => {
-        if (success) {
-          // store the token somewhere
-        } else {
-          // error while creating captcha
-        }
-      });
-    },
-    verifyCaptcha() {
-      this.captchaInstance.verifyCaptcha(
-        this.userInput,
-        this.token,
-        (success, message) => {
-          if (success) {
-            // captcha verification successful
-          } else {
-            // failed in captcha verification
-          }
-        }
-      );
-    },
-  },
-  beforeDestroy() {
-    this.captchaInstance.revert();
-    this.captchaInstance = null;
-  },
-};
-</script>
-```
-
-## Generate an Array of Images for Animation in Canvas Parallax
-
-1. **Extract Frames from Video:**
-
-   - Visit [Aspose Video to Image](https://products.aspose.app/video/video-to-image) and extract frames from your video. Choose a high frame count option based on your preference.
-
-2. **Download and Extract Frames:**
-
-   - Download the frames as a zip file and extract the contents.
-
-3. **Setup Node.js Project:**
-
-   - Create a new Node.js project or use an existing one.
-
-4. **Install Code Reducer:**
-
-   - Install `Code Reducer` using the following command:
-     ```bash
-     npm install codereducer
-     ```
-
-5. **Node.js Script to Generate Image Array:**
-
-   - Create a new file in your project and add the following Node.js script:
-
-     ```javascript
-     const { handleImage } = require("codereducer/handleImages");
-
-     new handleImage.createImageList(pathToFrames, outputPath);
-     ```
-
-     Replace `pathToFrames` with the full path to the directory containing your extracted frames and `outputPath` with the desired output directory for the array of image names.
-
-6. **Edit package.json:**
-
-   - Add `json"type": "module"` in package.json.
-
-7. **Run the Node.js Script:**
-
-   - Run the Node.js script to generate a file named `listImages101.js` containing an array with image names in series.
-
-8. **Organize Images in Your Project:**
-
-   - Copy all the extracted images to your project's public directory. Create a folder (e.g., "xyz") and place the images inside this folder.
-
-9. **Start Your Project Server:**
-
-   - Start your project server.
-
-10. **Access Images in Your Browser:**
-
-- Navigate to `http://yourprojecturl/xyz/imageName.jpg` to confirm that the images render correctly.
-
-11. **Create an `images.js` File:**
-
-    - In your project's `components` folder, create a file named `images.js`.
-
-12. **Update `images.js` with Image Array:**
-
-    - Update `images.js` with the image array obtained in step 6, adding the prefix `/xyz/` to each image path.
-
-13. **Example `images.js`:**
-
-    ```javascript
-    export default [
-      "/xyz/image1.jpg",
-      "/xyz/image2.jpg",
-      ...
-    ];
-    ```
-
-14. **Implementation Ready:**
-    - Your project is now set up and ready to use for creating a parallax animation using the generated image array.
-
-## Animate `canvas parallex`
-
-#### Use [aspose](https://products.aspose.app/video/video-to-image) for getting frames out of video.
-
-#### Before starting this follow all the steps described above for getting array of all the images with assigning proper paths.
-
-### In `React\Next JS`
-
-```javascript
-"use client";
-
-import React, { useEffect, useLayoutEffect, useRef } from "react";
-import { Josefin_Sans } from "next/font/google";
-import images from "@/components/images"; // This images is an array containing absolute path of all images with respect to base URL
-import canvasLoader from "codereducer/canvas";
-
-const Home = () => {
-  const cv = useRef(null);
-
-  useLayoutEffect(() => {
-    let canvas = new canvasLoader(cv.current, images, 200); // 200 is percentage of page till where animation should work change as per your convenience
-    canvas.init();
-    return () => {
-      canvas.revert();
-    };
-  }, [cv]);
-
-  return (
-    <>
-      <canvas ref={cv}></canvas>
-    </>
-  );
-};
-
-export default Home;
-```
-
-### In `Vue JS`
-
-```javascript
-<template>
-  <div style={{height: ypx, width: xpx}}> // Important to give width and height to parent of canvas
-    <canvas ref="canvas"></canvas>
-  </div>
-</template>
-
-<script>
-import CanvasLoader from './canvasLoader';
-
-export default {
-  data() {
-    return {
-      loader: null,
-    };
-  },
-  mounted() {
-    const canvasElement = this.$refs.canvas;
-    const frames = [...]; // your frames extracted from video
-    const percentToScroll = 300; // your percentToScroll change as per your convenience
-    this.loader = new CanvasLoader(canvasElement, frames, percentToScroll);
-    this.loader.init();
-  },
-  beforeDestroy() {
-    if (this.loader) {
-      this.loader.revert();
     }
-  },
-};
-</script>
+});
 ```
 
 ## Implement A Chatbot
@@ -584,6 +342,12 @@ const intent = {
 import ChatBot from "codereducer/artex";
 ```
 
+in HTML use this
+
+```HTML
+<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/artex/index.js
+```
+
 2. **Initialize**
 
 ```javascript
@@ -597,92 +361,6 @@ Here first parameter intent is the dataset you created and second is the tempera
 ```javascript
 bot.chat("Hey there");
 ```
-
-This will return you a response based on what user asked.
-
-### Here is basic implementation in Next js
-
-```javascript
-"use client";
-import customCursor from "codereducer/cursor";
-import React, { useEffect, useRef, useState } from "react";
-import ChatBot from "codereducer/artex";
-import intent from "@/components/intents";
-
-const Page = () => {
-  const [displayedElements, setDisplayedElements] = useState([]);
-  const [bot, setBot] = useState();
-  const [userText, setUserText] = useState("");
-
-  const crsr = useRef(null);
-  const disp = useRef(null);
-
-  useEffect(() => {
-    setBot(new ChatBot(intent, 50));
-    let c = new customCursor(crsr.current, false);
-    c.getCursor();
-    return () => {
-      c.revert();
-    };
-  }, []);
-
-  const getStructure = (by, data) => {
-    return (
-      <div className="w-max max-w-full bg-[rgb(50,68,44)] px-[25px] py-[15px] rounded-lg flex flex-col gap-[15px]">
-        <h3 className="font-normal text-sm tracking-wide border-b-2 pb-[10px]">
-          {by}
-        </h3>
-        <p>{data}</p>
-      </div>
-    );
-  };
-
-  const getResp = () => {
-    const st = getStructure("user", userText);
-    setDisplayedElements((prevElements) => [...prevElements, st]);
-    let response = getStructure("bot", bot.chat(userText));
-    setDisplayedElements((prevElements) => [...prevElements, response]);
-  };
-
-  return (
-    <>
-      <div ref={crsr}></div>
-      <div className="w-full h-screen">
-        <div className="w-full h-[75px] px-[25px] flex items-center bg-[rgb(103,255,2)]">
-          <h3 className="font-normal text-xl tracking-wide">
-            Welcome to A.R.T.E.X
-          </h3>
-        </div>
-        <div
-          className="w-full h-[calc(100dvh-75px-75px)] px-[25px] py-[25px] overflow-hidden overflow-y-auto flex flex-col gap-[25px]"
-          ref={disp}
-        >
-          {displayedElements}
-        </div>
-        <div className="w-full h-[75px] px-[25px] bg-[rgb(100,167,55)] flex justify-between items-center">
-          <input
-            type="text"
-            name=""
-            id=""
-            className="w-[78%] h-[50px] text-black bg-white rounded-lg outline-none px-[15px]"
-            onChange={(e) => setUserText(e.target.value)}
-            placeholder="Enter your text here..."
-          />
-          <button
-            className="w-[20%] h-[50px] bg-white text-black rounded-lg"
-            onClick={getResp}
-          >
-            Send
-          </button>
-        </div>
-      </div>
-    </>
-  );
-};
-
-export default Page;
-```
-
 
 
 ### Support us in our project with aim to help developers to write as minimal code as they can to reduce the development of every one.
