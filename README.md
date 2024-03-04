@@ -180,6 +180,7 @@ import CustomCursor from "codereducer/cursor"
 or use this CDN
 
 ```HTML
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/cursor/index.js"></script>
 ```
 
