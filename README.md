@@ -44,7 +44,7 @@ import Dkit from "codereducer/dkit";
 ****To use dkit in HTML use this CDN.****
 
 ```HTML
-<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/dkit/index.js" />
+<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/dkit/index.js" ></script>
 ```
 
 ***To use dkit here are the methods***
@@ -120,7 +120,7 @@ import Dkit from "codereducer/dkit";
 or
 
 ```HTML
-<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/dkit/index.js" />
+<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/dkit/index.js" ></script>
 ```
 
 Now use like this
@@ -180,7 +180,7 @@ import CustomCursor from "codereducer/cursor"
 or use this CDN
 
 ```HTML
-<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/cursor/index.js"to />
+<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/cursor/index.js"></script>
 ```
 
 2. To use it just use it like this
@@ -253,7 +253,7 @@ import captcha from "codereducer/captcha"
 for CDN use
 
 ```HTML
-<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/captcha/index.js" />
+<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/captcha/index.js" ></script>
 ```
 
 2. Initialize captcha
@@ -345,7 +345,7 @@ import ChatBot from "codereducer/artex";
 in HTML use this
 
 ```HTML
-<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/artex/index.js
+<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/artex/index.js"></script>
 ```
 
 2. **Initialize**
