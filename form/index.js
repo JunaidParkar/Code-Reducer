@@ -1,126 +1,129 @@
-const dom = Dkit.init()
+class FormValidator {
+  constructor(
+    form,
+    isRequiredAll = false,
+    requiredNone = [],
+    option = [
+      {
+        type: "checkbox",
+        allowed_from: [{ el: [], number_of_allowed: 0 }],
+      },
+      {
+        type: "custom_required",
+        func: null,
+      },
+    ]
+  ) {
+    this.form = form;
+    this.isRequiredAll = isRequiredAll;
+    this.isRequiredNone = requiredNone;
+    this.options = option;
+    this.toSetRequired = [
+      "date",
+      "datetime-local",
+      "email",
+      "file",
+      "image",
+      "number",
+      "password",
+      "tel",
+      "text",
+      "time",
+      "url",
+      "week",
+      "hidden",
+    ];
+  }
 
-// input range, color not supported should be handles personally because of its needs
-
-class formValidaator {
-    constructor(form, options = {
-        radio: {
-            init: false,
-            isAll: false,
-            isGroup: false,
-            el: null,
-            numberOfRequired: 0
-        },
-        checkbox: {
-            init: false,
-            isAll: false,
-            isGroup: false,
-            el: [],
-            numberOfRequired: 0
+  setRequired() {
+    Array.from(this.form.getElementsByTagName("input")).forEach((tag) => {
+      if (
+        this.toSetRequired.includes(tag.type) &&
+        !this.isRequiredNone.includes(tag)
+      ) {
+        for (const elem of this.options) {
+          if (elem.type == "custom_required" && elem.func != null) {
+            tag.setAttribute("isRequired", true);
+            break;
+          }
+          if (elem.type == "custom_required" && elem.func == null) {
+            tag.required = true;
+            break;
+          }
         }
-    }) {
-        this.form = form
-        this.isForm = this.check()
-        this.inputs = this.getAllInputs()
-        this.options = options
-        this.submitButton = this.getSubmitButton()
-        console.log(this.submitButton)
-    }
+      }
+    });
+  }
 
-    check() {
-        if (this.form.tagName != "FORM") {
-            console.error("Invalid element, please use a <form> tag.")
-            return false
+  verifyRequirement(obj) {
+    if (obj.type == "checkbox") {
+      obj.allowed_from.forEach((allowed_from) => {
+        if (
+          allowed_from.number_of_allowed > allowed_from.el.length ||
+          allowed_from.number_of_allowed < 0
+        ) {
+          console.error(
+            "Counting error: In options elements list should be greater than number of allowed elements"
+          );
         } else {
-            return true
+          let clicked = [];
+          allowed_from.el.forEach((element) => {
+            element.onclick = () => {
+              if (element.checked) {
+                clicked.push(element);
+                if (clicked.length > allowed_from.number_of_allowed) {
+                  clicked.shift();
+                }
+                allowed_from.el.forEach((element2) => {
+                  console.log(clicked);
+                  if (clicked.includes(element2)) {
+                    console.log(element2);
+                    element2.checked = true;
+                  } else {
+                    element2.checked = false;
+                  }
+                });
+              } else {
+                element.checked = false;
+                let newClicked = clicked.filter((item) => item !== element);
+                clicked = newClicked;
+              }
+            };
+          });
         }
+      });
     }
+  }
 
-    getAllInputs() {
-        if (this.isForm) {
-            let inp = this.form.getElementsByTagName("input")
-            let inp1 = Array.from(inp)
-            if (inp1.length > 0) {
-                return inp1
-            }else {
-                console.warn('No input found inside the form')
-                return false
+  validate(success) {
+    this.setRequired();
+    this.options.forEach((obj) => {
+      this.verifyRequirement(obj);
+    });
+    this.form.onsubmit = (e) => {
+      e.preventDefault();
+      let err = false;
+      for (const opt of this.options) {
+        if (opt.type == "custom_required" && opt.func != null) {
+          let inputs = Array.from(this.form.querySelectorAll("[isRequired]"));
+          for (const inp of inputs) {
+            if (inp.value.trim() == "") {
+              opt.func(
+                `Please proide value for ${inp.getAttribute("requiredName")}`
+              );
+              err = true;
+              break;
             }
+          }
+          break;
         }
-    }
-
-    getSubmitButton() {
-        if (this.isForm && this.inputs) {
-            let submitButtons = []
-            this.inputs.forEach((ele) => {
-                if (ele.type == "submit") submitButtons.push(ele)
-            })
-            if (submitButtons.length > 1) {
-                console.error("Multiple submit available. Only one is allowed")
-                return false
-            } else return true   
-        }
-    }
-
-    validateOptions() {
-        if (this.form && this.isForm && this.submitButton && this.inputs) {
-            let b = true
-            for (const key in this.options) {
-                if (this.options[key].init && this.options[key].isGroup) {
-                    console.error("isAll and isGroup cannot be true at same time. Please select only one from them.")
-                    b = false
-                    break
-                }
-                if (this.options[key].el.length <= 0 && this.options[key].init && this.options[key].isGroup) {
-                    console.error(`${key} options are not given.`)
-                    b = false
-                    break
-                }
-                if (this.options[key].init && this.options[key].isGroup && this.options[key].numberOfRequired <=0) {
-                    console.log("Please provide number of fields to get required. It should be more than 1")
-                    b = false
-                    break
-                }
-            }
-            return b
-        }
-    }
-
-    addRequire() {
-        if (this.form && this.isForm && this.submitButton && this.inputs) {
-            this.inputs.forEach((ele) => {
-                if (ele.type != "radio" && ele.type != "submit" && ele.type != "range" && ele.type != "reset" && ele.type != "color" && ele.type != "checkbox" && ele.type != "button") {
-                    ele.required = true
-                } else ele.required = false
-                if (ele.type == "submit" || ele.type == "button") {
-                    ele.required = false
-                }
-                if ((this.options.radio.init && this.options.radio.isAll && ele.type == "radio") || this.options.checkbox.init && this.options.checkbox.isAll && ele.type == "checkbox") {
-                    ele.required = true
-                } else ele.required = false
-            })
-
-        }
-    }
-
-    init() {
-        if (this.form && this.isForm && this.submitButton && this.inputs) {
-            this.addRequire()
-            let valid = this.validateOptions()
-            if (valid) {
-                this.form.onsubmit = (e) => {
-                    e.preventDefault()
-                }
-            }
-        }
-    }
+      }
+      if (!err) {
+        success();
+      }
+    };
+  }
 }
 
-dom.id("form")
 
-let f = new formValidaator(dom.get())
-f.init()
-
-// console.log(dom.get().tagName)
-
-dom.revert()
+export default FormValidator
