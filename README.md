@@ -35,13 +35,13 @@ Here's how you can use the `codeReducer` library in your JavaScript projects:
 
 ## `Dkit`
 
-\***\*In frameworks import using\*\***
+**In frameworks import using**
 
 ```javascript
 import Dkit from "codereducer/dkit";
 ```
 
-\***\*To use dkit in HTML use this CDN.\*\***
+**To use dkit in HTML use this CDN.**
 
 ```HTML
 <script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/dkit/index.js" ></script>
@@ -117,7 +117,7 @@ let element = dkit.get();
 
 This method can be used for cleanUp. It clears all the selected elements
 
-\***\*How to use in frameworks\*\***
+**How to use in frameworks**
 
 Here's an example of how you might use Dkit to create a new `div` element, add it to the DOM, and then manipulate it:
 
