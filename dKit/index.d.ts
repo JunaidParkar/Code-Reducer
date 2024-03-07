@@ -1,5 +1,6 @@
 declare namespace kit {
   interface Instance {
+    from(element: HTMLElement): this
     id(id: string): this;
     class(className: string): this;
     tag(tagName: string): this;

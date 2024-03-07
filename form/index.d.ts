@@ -27,6 +27,10 @@ declare class FormValidator {
      * @param {CallableFunction} [success] - This function triggers only when the form validation pass
      */
     validate(success: () => void): void;
+    /**
+     * It cleans up the stuffs for frameworks
+     */
+    revert(): void;
 }
 
 

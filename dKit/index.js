@@ -21,6 +21,11 @@ class Dkit {
     return this;
   }
 
+  from(element) {
+    this.element = element
+    return this
+  }
+
   tag(tagName) {
     if (this.element) {
       this.element = this.element.getElementsByTagName(tagName);

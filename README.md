@@ -33,21 +33,21 @@ Can use it with HTML by including our CDN. Every features has its own CDN to mak
 
 Here's how you can use the `codeReducer` library in your JavaScript projects:
 
-## Manipulate `DOM` with `Dkit`
+## `Dkit`
 
-****In frameworks import using****
+\***\*In frameworks import using\*\***
 
 ```javascript
 import Dkit from "codereducer/dkit";
 ```
 
-****To use dkit in HTML use this CDN.****
+\***\*To use dkit in HTML use this CDN.\*\***
 
 ```HTML
 <script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/dkit/index.js" ></script>
 ```
 
-***To use dkit here are the methods***
+**_To use dkit here are the methods_**
 
 **init()**
 
@@ -55,6 +55,14 @@ This method initialize Dkit (DOM kit) tools.
 
 ```javascript
 let dkit = Dkit.init();
+```
+
+**from()**
+
+This method can be used to select any element inside of specific element.
+
+```javascript
+dkit.from("Any HTML element here").tag("input");
 ```
 
 **id()**
@@ -109,7 +117,7 @@ let element = dkit.get();
 
 This method can be used for cleanUp. It clears all the selected elements
 
-****How to use in frameworks****
+\***\*How to use in frameworks\*\***
 
 Here's an example of how you might use Dkit to create a new `div` element, add it to the DOM, and then manipulate it:
 
@@ -144,37 +152,27 @@ use single call for multiple manipulations
 
 ```javascript
 import Dkit from "codereducer/dkit";
-
 // initialize dKit
 let kit = Dkit.init();
-
 // get first element
-let elem = init.id("scroll1").tag("canvas").get();
-
-// target second element
-let h1 = init.id("try").tag("h1");
-
-// get second element
-let elem2 = h1.get();
-
+let elem = kit.id("scroll1").tag("canvas").get();
+kit.revert()
+// get span tag from inside of h1 tag
+let span = kit.from("HTML element h1 tag").tag("span").get()
+kit.revert()
 // use all elements
-console.log(elem1); // return all the element you targetted
-console.log(elem2); // return all the element you targetted
-console.log(h1); // consoles the array or a prototype
-
-h1.revert(); // cleans up all the instances
-
-console.log(h1); // console or return null
+console.log(elem);
+console.log(span);
 ```
 
 With Dkit, manipulating the DOM becomes a breeze! Enjoy coding with Dkit.
 
-## Create `Custom Cursor`
+## `Custom Cursor`
 
 1. First import `custom cursor` in framework via
 
 ```javascript
-import CustomCursor from "codereducer/cursor"
+import CustomCursor from "codereducer/cursor";
 ```
 
 or use this CDN
@@ -187,17 +185,17 @@ or use this CDN
 2. To use it just use it like this
 
 ```javascript
-let dom = Dkit.init()
-dom.id("cursor-element") // an empty div element
-let c = new CustomCursor(dom.get(), false)
-c.getCursor()
-dom.revert()
+let dom = Dkit.init();
+dom.id("cursor-element"); // an empty div element
+let c = new CustomCursor(dom.get(), false);
+c.getCursor();
+dom.revert();
 ```
 
-3. Only if using any framework you need to use an clean up function that will be 
+3. Only if using any framework you need to use an clean up function that will be
 
 ```javascript
-c.revert()
+c.revert();
 ```
 
 **Create a magnetic effect after adding custom cursor.**
@@ -205,9 +203,12 @@ c.revert()
 `Note: Custom cursor is mandatory in order to make magnetic effect`
 
 ```javascript
-let magneticElements = [document.getElementById("elem1"), document.getElementById("elem2")]
+let magneticElements = [
+  document.getElementById("elem1"),
+  document.getElementById("elem2"),
+];
 
-c.makeMagnet(magneticElements)
+c.makeMagnet(magneticElements);
 ```
 
 if using frame works then for sure you will use References. And this can be implemented by
@@ -248,7 +249,7 @@ export default function Home() {
 1. First import using
 
 ```javascript
-import captcha from "codereducer/captcha"
+import captcha from "codereducer/captcha";
 ```
 
 for CDN use
@@ -260,22 +261,26 @@ for CDN use
 2. Initialize captcha
 
 ```javascript
-let dom = Dkit.init()
-dom.id("canvas-tag")
+let dom = Dkit.init();
+dom.id("canvas-tag");
 // let capt = new captcha(dom.get(), "any colour for captcha font", "any 128 bit key")
-let capt = new captcha(dom.get(), "#f5f5f5", "6rRwhBidAD0dME9mSo8Rr88F9A8TLVcR")
-dom.revert()
+let capt = new captcha(
+  dom.get(),
+  "#f5f5f5",
+  "6rRwhBidAD0dME9mSo8Rr88F9A8TLVcR"
+);
+dom.revert();
 ```
 
 3. Generate captcha
 
 ```javascript
 capt.createCaptha((token, status) => {
-    if (status) {
-        // store the token some where
-    } else {
-        reject("Error generating captcha");
-    }
+  if (status) {
+    // store the token some where
+  } else {
+    reject("Error generating captcha");
+  }
 });
 ```
 
@@ -283,16 +288,16 @@ capt.createCaptha((token, status) => {
 
 ```javascript
 cr.verifyCaptcha("userInput", "token", (status, message) => {
-    if (status) {
-        // Captcha verified successfully
-    } else {
-        console.log("failed");
-        // Captcha verification not successful
-    }
+  if (status) {
+    // Captcha verified successfully
+  } else {
+    console.log("failed");
+    // Captcha verification not successful
+  }
 });
 ```
 
-## Implement A Chatbot
+## A Chatbot
 
 1. **Before implementing a chatbot first prepare the dataset for it.**
 2. **Dataset must be in the following order. No errors are allowed in it.**
@@ -363,5 +368,90 @@ Here first parameter intent is the dataset you created and second is the tempera
 bot.chat("Hey there");
 ```
 
+## Form validation
+
+1. **Before you begin there are some points you need to remember very well. This feature only handle inputs with type mentioned here: `date`, `datetime-local`, `email`, `file`, `image`, `number`, `password`, `tel`, `text`, `time`, `url`, `week`, `hidden`**
+2. **If you want to use custom required message on inputs instead of default, Then prepare a function that creates a message box and appends to your website. Make sure this function will recieve a message as a argument. An example has been given below**
+
+```javascript
+const showMessage = (message) => {
+  let dom = Dkit.init();
+  dom.revert();
+  let div = dom.create("div").get();
+  dom.revert();
+  let p = dom.create("p").get();
+  dom.revert();
+  p.textContent = message;
+  div.appendChild(p);
+  document.body.appendChild(div);
+  setTimeout(() => {
+    document.body.removeChild(div);
+  }, 2000);
+};
+```
+
+3. **Now create another function which you wanna execute when form gets validate successfully, but here you won't recieve any arguments. Just like**
+
+```javascript
+const submitForm = () => {
+  console.log("form submmitted")
+}
+```
+
+4. **Now you are ready to rock. Lets just import the stuffs**
+
+```javascript
+import FormValidator from "codereducer/form"
+```
+
+**or**
+
+```javascript
+<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/form/index.js" ></script>
+```
+
+5. **Initialize the values.**
+
+    - Look at the keypoints carefully
+      1. `form` is the HTML form element you want to validate
+      2. `isRequiredAll` is a `boolean` value that says whether to add required keyword to all inputs or not
+      3. `requiredNone` is an `array` ***not*** the `HTMLCollection`. If `isRequiredAll` is true then that will set all inputs as a required input except those inputs which will me mentioned in this `array`
+      4. `option` is an `array` of `object` defining additional functionality. if you want to create custom required message instead of using default message i.e message of please fill this field. Here are the options you can provide.
+
+      ```javascript
+      option = [
+        {
+          type: "checkbox",
+          allowed_from: [{el: ["elem1", "elem2", ...], number_of_allowed: 2}, {el: ["elem3", "elem4", ...], number_of_allowed: 1}] // multiple checkbox set can be provided here in array and number_of_allowed should be greater than 0  and less than length of el
+        },{
+          type: "custom_required",
+          func: showMessage
+        }
+      ]
+      ```
+          (Note) Any one option can also be passed
+  
+6. **Now just start validation**
+
+```javascript
+let formV = new FormValidator("HTML form element", true, [], [
+  {
+    type: "checkbox",
+    allowed_from: [{el: ["HTML element1", "HTML element2"], number_of_allowed: 1}]
+  }, {
+    type: "custom_required",
+    func: showMessage
+  }
+])
+formV.validate(() => {
+  console.log("validation completed)
+})
+```
+
+7. **A clean up function for frameworks**
+
+```javascript
+formV.revert()
+```
 
 ### Support us in our project with aim to help developers to write as minimal code as they can to reduce the development of every one.
