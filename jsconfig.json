@@ -2,5 +2,5 @@
     "compilerOptions": {
       "checkJs": false
     },
-    "include": ["./**/*.js"]
+    "include": ["./**/*.js", "babel.config.js"]
 }
