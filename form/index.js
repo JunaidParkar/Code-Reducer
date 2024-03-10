@@ -102,7 +102,7 @@ class FormValidator {
         for (const inp of inputs) {
           if (inp.value.trim() == "") {
             opt.func(
-              `Please proide value for ${inp.getAttribute("requiredName")}`
+              `Please proide value for ${inp.name}`
             );
             err = true;
             break;
