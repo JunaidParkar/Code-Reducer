@@ -80,7 +80,7 @@ class ChatBot {
       return `Do you mean ${final_resp}?`;
     } else {
       let resp_array = this.dataset[filter[0][1]].responses;
-      return resp_array[Math.floor(Math.random() * resp_array.length)];
+      return [filter[0][1], resp_array[Math.floor(Math.random() * resp_array.length)]];
     }
   }
 

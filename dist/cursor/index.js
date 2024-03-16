@@ -1,8 +1,5 @@
 "use strict";
 
-var _gsap = _interopRequireWildcard(require("gsap"));
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != _typeof(e) && "function" != typeof e) return { "default": e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n["default"] = e, t && t.set(e, n), n; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -65,11 +62,11 @@ var customCursor = /*#__PURE__*/function () {
     key: "moveCursor",
     value: function moveCursor(e) {
       if (this.cursor) {
-        _gsap["default"].to(this.cursor, {
+        gsap.to(this.cursor, {
           left: "".concat(e.clientX, "px"),
           top: "".concat(e.clientY, "px"),
           duration: 1,
-          ease: _gsap.Power2.easeOut
+          ease: Power2.easeOut
         });
         this.cursor.style.left = "".concat(e.clientX, "px");
         this.cursor.style.top = "".concat(e.clientY, "px");
@@ -98,32 +95,32 @@ var customCursor = /*#__PURE__*/function () {
       }
       if (this.isMagnetActive) {
         var g = this.isMagnetActive.getBoundingClientRect();
-        var x = _gsap["default"].utils.mapRange(0, g.width, 0, 1, e.clientX - g.left);
-        var y = _gsap["default"].utils.mapRange(0, g.height, 0, 1, e.clientY - g.top);
-        _gsap["default"].to(this.isMagnetActive, {
+        var x = gsap.utils.mapRange(0, g.width, 0, 1, e.clientX - g.left);
+        var y = gsap.utils.mapRange(0, g.height, 0, 1, e.clientY - g.top);
+        gsap.to(this.isMagnetActive, {
           x: this.lerp(-50, 50, x),
           y: this.lerp(-50, 50, y),
           duration: 1,
-          ease: _gsap.Power2.easeOut
+          ease: Power2.easeOut
         });
-        _gsap["default"].to(this.cursor, {
+        gsap.to(this.cursor, {
           scale: 4,
           duration: 1,
-          ease: _gsap.Power2.easeOut
+          ease: Power2.easeOut
         });
         this.isMagnetActive = null;
       }
       this.magnetElement.forEach(function (refs) {
-        _gsap["default"].to(refs, {
+        gsap.to(refs, {
           x: 0,
           y: 0,
           duration: 1,
-          ease: _gsap.Power2.easeOut
+          ease: Power2.easeOut
         });
-        _gsap["default"].to(_this2.cursor, {
+        gsap.to(_this2.cursor, {
           scale: 1,
           duration: 1,
-          ease: _gsap.Power2.easeOut
+          ease: Power2.easeOut
         });
       });
     }

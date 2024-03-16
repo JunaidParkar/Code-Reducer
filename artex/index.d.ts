@@ -10,7 +10,7 @@ declare class ChatBot {
      * chat with the bot and get response as per your dataset
      * @param {string} query - Enter the user query
      */
-    chat(query: string): string
+    chat(query: string): string[]
 }
 
 export default ChatBot

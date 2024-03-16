@@ -115,7 +115,7 @@ var FormValidator = /*#__PURE__*/function () {
             for (var _i = 0, _inputs = inputs; _i < _inputs.length; _i++) {
               var inp = _inputs[_i];
               if (inp.value.trim() == "") {
-                opt.func("Please proide value for ".concat(inp.getAttribute("requiredName")));
+                opt.func("Please proide value for ".concat(inp.name));
                 err = true;
                 break;
               }

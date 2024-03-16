@@ -52,12 +52,9 @@ class Dkit {
   }
 
   get() {
-    return this.element;
-  }
-
-  revert() {
-    this.element = null;
-    return this;
+    let data = this.element
+    this.element = null
+    return data;
   }
 }
 

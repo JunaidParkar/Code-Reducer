@@ -6,8 +6,7 @@ declare namespace kit {
     tag(tagName: string): this;
     query(selector: string): this;
     create(tag: string): this;
-    get(): HTMLElement | null;
-    revert(): this;
+    get(): HTMLElement | HTMLAllCollection | null;
   }
 }
 
