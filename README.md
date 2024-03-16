@@ -44,7 +44,7 @@ import Dkit from "codereducer/dkit";
 **To use dkit in HTML use this CDN.**
 
 ```HTML
-<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/dkit/index.js" ></script>
+<script src="https://junaidparkar.github.io/Code-Reducer/dist/dkit/index.js" ></script>
 ```
 
 **_To use dkit here are the methods_**
@@ -107,15 +107,11 @@ dkit.create("div");
 
 **get()**
 
-This method is mandatory as it returns the currently selected HTML element.
+This method is mandatory as it returns the currently selected HTML element. And also erases the collected element.
 
 ```javascript
 let element = dkit.get();
 ```
-
-**revert()**
-
-This method can be used for cleanUp. It clears all the selected elements
 
 **How to use in frameworks**
 
@@ -128,7 +124,7 @@ import Dkit from "codereducer/dkit";
 or
 
 ```HTML
-<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/dkit/index.js" ></script>
+<script src="https://junaidparkar.github.io/Code-Reducer/dist/dkit/index.js" ></script>
 ```
 
 Now use like this
@@ -156,10 +152,8 @@ import Dkit from "codereducer/dkit";
 let kit = Dkit.init();
 // get first element
 let elem = kit.id("scroll1").tag("canvas").get();
-kit.revert()
 // get span tag from inside of h1 tag
 let span = kit.from("HTML element h1 tag").tag("span").get()
-kit.revert()
 // use all elements
 console.log(elem);
 console.log(span);
@@ -179,7 +173,7 @@ or use this CDN
 
 ```HTML
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/cursor/index.js"></script>
+<script src="https://junaidparkar.github.io/Code-Reducer/dist/cursor/index.js"></script>
 ```
 
 2. To use it just use it like this
@@ -255,7 +249,7 @@ import captcha from "codereducer/captcha";
 for CDN use
 
 ```HTML
-<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/captcha/index.js" ></script>
+<script src="https://junaidparkar.github.io/Code-Reducer/dist/captcha/index.js" ></script>
 ```
 
 2. Initialize captcha
@@ -351,7 +345,7 @@ import ChatBot from "codereducer/artex";
 in HTML use this
 
 ```HTML
-<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/artex/index.js"></script>
+<script src="https://junaidparkar.github.io/Code-Reducer/dist/artex/index.js"></script>
 ```
 
 2. **Initialize**
@@ -407,7 +401,7 @@ import FormValidator from "codereducer/form"
 **or**
 
 ```javascript
-<script src="https://junaidparkar.github.io/Code-Reducer-CDN/dist/form/index.js" ></script>
+<script src="https://junaidparkar.github.io/Code-Reducer/dist/form/index.js" ></script>
 ```
 
 5. **Initialize the values.**
