@@ -1,49 +1,49 @@
 {
-  "name": "codereducer",
-  "version": "1.3.2",
-  "description": "Reduce the number of lines of code for getting some extensive UI/UX feature in your lovely website.",
-  "main": "index.js",
-  "types": "index.d.ts",
-  "type": "module",
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "test": "node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JunaidParkar/codereducer.git"
-  },
-  "keywords": [
-    "codereducer",
-    "Code Reducer",
-    "code reducer",
-    "UI",
-    "UX",
-    "tool kit",
-    "frameworks",
-    "javascript",
-    "form validation"
-  ],
-  "author": "Junaid Parkar",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JunaidParkar/codereducer/issues"
-  },
-  "homepage": "https://github.com/JunaidParkar/codereducer#readme",
-  "dependencies": {
-    "gsap": "^3.12.5"
-  },
-  "files": [
-    "captcha/*",
-    "cursor/*",
-    "dkit/*",
-    "artex/*",
-    "form/*"
-  ],
-  "devDependencies": {
-    "@babel/cli": "^7.23.9",
-    "@babel/preset-env": "^7.24.0"
-  }
+    "name": "codereducer",
+    "version": "1.3.3",
+    "description": "Reduce the number of lines of code for getting some extensive UI/UX feature in your lovely website.",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "type": "module",
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "test": "node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JunaidParkar/codereducer.git"
+    },
+    "keywords": [
+        "codereducer",
+        "Code Reducer",
+        "code reducer",
+        "UI",
+        "UX",
+        "tool kit",
+        "frameworks",
+        "javascript",
+        "form validation"
+    ],
+    "author": "Junaid Parkar",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/JunaidParkar/codereducer/issues"
+    },
+    "homepage": "https://github.com/JunaidParkar/codereducer#readme",
+    "dependencies": {
+        "gsap": "^3.12.5"
+    },
+    "files": [
+        "captcha/*",
+        "cursor/*",
+        "dkit/*",
+        "artex/*",
+        "form/*"
+    ],
+    "devDependencies": {
+        "@babel/cli": "^7.23.9",
+        "@babel/preset-env": "^7.24.0"
+    }
 }
