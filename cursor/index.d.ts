@@ -25,4 +25,4 @@ declare class customCursor {
     revert(): void
 }
 
-export = customCursor
+export default customCursor
