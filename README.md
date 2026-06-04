@@ -163,80 +163,129 @@ With Dkit, manipulating the DOM becomes a breeze! Enjoy coding with Dkit.
 
 ## `Custom Cursor`
 
-1. First import `custom cursor` in framework via
+**First import `custom cursor` in framework via**
 
 ```javascript
-import CustomCursor from "codereducer/cursor";
+import customCursor from "codereducer/cursor";
 ```
 
-or use this CDN
+**or use this CDN**
 
 ```HTML
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://junaidparkar.github.io/Code-Reducer/dist/cursor/index.js"></script>
 ```
 
-2. To use it just use it like this
+**It can be used by following method**
 
 ```javascript
 let dom = Dkit.init();
 dom.id("cursor-element"); // an empty div element
-let c = new CustomCursor(dom.get(), false);
+let c = new customCursor(dom.get(), false);
 c.getCursor();
 dom.revert();
 ```
 
-3. Only if using any framework you need to use an clean up function that will be
+**Only if using any framework you need to use an clean up function that will be**
 
 ```javascript
 c.revert();
 ```
 
-**Create a magnetic effect after adding custom cursor.**
+`Note: If using Next JS and building your page as Server Side Component, it will the above given method will give you error as it is intended to yse in client side rendering. You can follow the below steps if you are building servide side rendering page in next js, else you can skip to the next part.`
 
-`Note: Custom cursor is mandatory in order to make magnetic effect`
+- create a client side component as below code
+  ```javascript
+  "use client";
+  import { useEffect } from "react";
+  import customCursor from "codereducer/cursor";
+  import Dkit from "codereducer/dKit";
 
-```javascript
-let magneticElements = [
-  document.getElementById("elem1"),
-  document.getElementById("elem2"),
-];
+  export default function CursorClient() {
+    useEffect(() => {
+      const dom = Dkit.init();
+      dom.id("cursor-element");
+      const c = new customCursor(dom.get(), false);
+      c.getCursor();
+      document.body.style.cursor = "auto";
+      return () => {
+        dom.revert?.();
+        c.revert?.();
+      };
+    }, []);
 
-c.makeMagnet(magneticElements);
-```
+    return null;
+  }
+  ```
+- import `CursorClient` in your server side page.
 
-if using frame works then for sure you will use References. And this can be implemented by
+`Note: make sure there is an empty div with id "cursor-element" in your server page where you will be importing this component.`
 
-```javascript
-'use client'
-import customCursor from 'codereducer/cursor'
-import { useEffect, useRef } from 'react'
+- In your server code it should return like below
+  ```javascript
+  import CursorClient from "@/components/cursor";
 
-export default function Home() {
+  export default function Home() {
 
-  const myRef = useRef();
+    return (
+      <>
+        <CursorClient />
+        <div id="cursor-element"></div>
+      </>
+    )
+  ```
 
-  const setRef = (element) => {
-    if (element) {
-      myRef.current = [...(myRef.current || []), element];
-    }
-  };
+- **If you want to design your own cursor in css, you can set the argument to true in below line**
+  ```javascript
+  const c = new customCursor(dom.get(), true); // instead of false, pass true boolean operator and design your own cursor in css
+  ```
 
-  useEffect(() => {
-    let c = new customCursor()
-    c.getCursor()
-    c.makeMagnet(myRef.current)
-    return () => {
-      c.revert()
-    }
-  }, []);
+***Create a magnetic effect after adding custom cursor.***
 
-  return (
-    <div ref={setRef}></div>
-    <h1 ref={setRef}></h1>
-    <a ref={setRef}></a>
-  )
-```
+- `Note: Custom cursor is mandatory in order to make magnetic effect`
+
+  ```javascript
+    let magneticElements = [
+      document.getElementById("elem1"),
+      document.getElementById("elem2"),
+    ];
+
+    c.makeMagnet(magneticElements);
+  ```
+
+- if using frameworks then for sure you will use References. And this can be implemented by
+
+  ```javascript
+  'use client'
+  import customCursor from 'codereducer/cursor'
+  import { useEffect, useRef } from 'react'
+
+  export default function Home() {
+
+    const myRef = useRef();
+
+    const setRef = (element) => {
+      if (element) {
+        myRef.current = [...(myRef.current || []), element];
+      }
+    };
+
+    useEffect(() => {
+      let c = new customCursor()
+      c.getCursor()
+      c.makeMagnet(myRef.current)
+      return () => {
+        c.revert()
+      }
+    }, []);
+
+    return (
+      <div ref={setRef}></div>
+      <h1 ref={setRef}></h1>
+      <a ref={setRef}></a>
+    )
+  }
+  ```
 
 ## Generate and verify `captcha`
 
@@ -246,7 +295,7 @@ export default function Home() {
 import captcha from "codereducer/captcha";
 ```
 
-for CDN use
+  - for CDN use
 
 ```HTML
 <script src="https://junaidparkar.github.io/Code-Reducer/dist/captcha/index.js" ></script>
