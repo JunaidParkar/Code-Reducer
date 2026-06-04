@@ -5,158 +5,153 @@ class customCursor {
     constructor(cursor, custom = false, mediaSize = 520) {
         this.cursor = cursor;
         this.custom = custom;
-        this.mediaSize = mediaSize;
         this.magnetElement = [];
-        this.isMagnetActive = null;
-        this.toPerform = window.innerWidth >= this.mediaSize;
-        this.handleResize = this.setPerformance.bind(this);
-        this.handleMouseMove = this.moveCursor.bind(this);
-        this.handleMagnetMove = this.magneticEffect.bind(this);
-        window.addEventListener("resize", this.handleResize);
+        this.isMagnetActive = false;
+        this.mediaSize = mediaSize;
+        this.toPerform = window.innerWidth < this.mediaSize ? false : true
+        window.addEventListener("resize", () => this.setPerformance())
     }
-
     setPerformance() {
         if (window.innerWidth < this.mediaSize) {
-            this.toPerform = false;
             if (this.cursor) {
-                this.cursor.style.display = "none";
+                this.cursor.style.display = "none"
             }
-            document.body.style.cursor = "auto";
+            this.toPerform = false
         } else {
-            this.toPerform = true;
-            if (this.cursor) {
-                this.cursor.style.display = "block";
-            }
+            this.toPerform = true
         }
     }
-
     lerp(x, y, a) {
         return x * (1 - a) + y * a;
     }
-
     createCursor() {
-        if (!this.cursor) return;
-        this.cursor.style.setProperty("all", "unset");
-        this.cursor.style.position = "fixed";
-        this.cursor.style.zIndex = "999999999999";
-        this.cursor.style.width = "20px";
-        this.cursor.style.height = "20px";
-        this.cursor.style.background = "white";
-        this.cursor.style.borderRadius = "50%";
-        this.cursor.style.pointerEvents = "none";
-        this.cursor.style.mixBlendMode = "difference";
-        this.cursor.style.transform = "translate(-50%, -50%)";
+        if (this.cursor) {
+            this.cursor.style.setProperty("all", "unset");
+            this.cursor.style.zIndex = 999999999999;
+            this.cursor.style.background = "white";
+            this.cursor.style.height = "20px";
+            this.cursor.style.width = "20px";
+            this.cursor.style.borderRadius = "50%";
+            this.cursor.style.mixBlendMode = "difference";
+            this.cursor.style.position = "fixed";
+            this.cursor.style.pointerEvents = "none";
+            this.cursor.style.scale = 1;
+        }
     }
-
     moveCursor(e) {
         if (this.cursor) {
-            console.log("moving 1");
-            this.cursor.style.transform = "translateX(-50%) translateY(-50%)";
+            this.cursor.style.opacity = 1
+            this.cursor.style.transform = `translateX(-50%) translateY(-50%)`
             gsap.to(this.cursor, {
-                left: e.clientX,
-                top: e.clientY,
-                duration: 0.5,
+                left: `${e.clientX}px`,
+                top: `${e.clientY}px`,
+                duration: 0.25,
                 ease: Power2.easeOut,
-                overwrite: true,
             });
         }
     }
 
     magneticEffect(e) {
-        let activeElement = null;
-        for (const refs of this.magnetElement) {
-            const rect = refs.getBoundingClientRect();
-            const inside =
-                e.clientX >= rect.left &&
-                e.clientX <= rect.right &&
-                e.clientY >= rect.top &&
-                e.clientY <= rect.bottom;
-            if (inside) {
-                activeElement = refs;
+        for (let refs of this.magnetElement) {
+            let g = refs.getBoundingClientRect();
+            let toMagnetize =
+                e.clientX >= g.left &&
+                e.clientX <= g.right &&
+                e.clientY >= g.top &&
+                e.clientY <= g.bottom;
+            if (toMagnetize) {
+                this.isMagnetActive = refs;
                 break;
             }
         }
-
-        if (activeElement) {
-            const rect = activeElement.getBoundingClientRect();
-            const x = gsap.utils.mapRange(0, rect.width, 0, 1, e.clientX - rect.left);
-            const y = gsap.utils.mapRange(0, rect.height, 0, 1, e.clientY - rect.top);
-            gsap.to(activeElement, {
+        if (this.isMagnetActive) {
+            let g = this.isMagnetActive.getBoundingClientRect();
+            let x = gsap.utils.mapRange(0, g.width, 0, 1, e.clientX - g.left);
+            let y = gsap.utils.mapRange(0, g.height, 0, 1, e.clientY - g.top);
+            gsap.to(this.isMagnetActive, {
                 x: this.lerp(-50, 50, x),
                 y: this.lerp(-50, 50, y),
-                duration: 0.4,
+                duration: 1,
                 ease: Power2.easeOut,
             });
-            if (this.cursor) {
-                gsap.to(this.cursor, {
-                    scale: 4,
-                    duration: 0.3,
-                    ease: Power2.easeOut,
-                });
-            }
-        } else {
-            this.magnetElement.forEach((refs) => {
-                gsap.to(refs, {
-                    x: 0,
-                    y: 0,
-                    duration: 0.4,
-                    ease: Power2.easeOut,
-                });
+            gsap.to(this.cursor, {
+                scale: 4,
+                duration: 1,
+                ease: Power2.easeOut,
             });
-            if (this.cursor) {
-                gsap.to(this.cursor, {
-                    scale: 1,
-                    duration: 0.3,
-                    ease: Power2.easeOut,
-                });
-            }
+            this.isMagnetActive = null;
         }
-    }
-
-    getCursor() {
-        if (!this.cursor || !this.toPerform) return;
-        if (!this.custom) {
-            this.createCursor();
-        }
-        this.cursor.style.opacity = "1";
-        document.body.style.cursor = "none";
-        document.addEventListener("mousemove", this.handleMouseMove);
+        this.magnetElement.forEach((refs) => {
+            gsap.to(refs, {
+                x: 0,
+                y: 0,
+                duration: 1,
+                ease: Power2.easeOut,
+            });
+            gsap.to(this.cursor, {
+                scale: 1,
+                duration: 1,
+                ease: Power2.easeOut,
+            });
+        });
     }
 
     makeMagnet(refArray) {
-        if (!this.toPerform) {
-            console.warn("Custom cursor disabled on this screen size");
-            return;
-        }
-        if (!Array.isArray(refArray) || refArray.length === 0) {
-            console.warn("No element passed for magnetic effect");
-            return;
-        }
-        refArray.forEach((ref) => {
-            if (ref && !this.magnetElement.includes(ref)) {
-                this.magnetElement.push(ref);
+        if (this.toPerform) {
+            if (refArray.length > 0) {
+                refArray.forEach((refs) => {
+                    if (refs) {
+                        this.magnetElement.includes(refs) ?
+                            "" :
+                            this.magnetElement.push(refs);
+                    }
+                });
+                document.addEventListener("mousemove", (e) => this.magneticEffect(e));
+            } else {
+                console.warn("No Element passed for magnetic effect");
             }
-        });
-        document.addEventListener("mousemove", this.handleMagnetMove);
+        } else {
+            console.warn("Custom cursor not found on this page");
+        }
     }
-
+    getCursor() {
+        if (this.cursor && this.toPerform) {
+            if (!this.custom) {
+                this.createCursor();
+            }
+            this.cursor ? this.cursor.style.opacity = 0 : "";
+            document.body.style.cursor = "none";
+            document.addEventListener("mouseenter", () =>
+                this.cursor ? this.cursor.style.opacity = 1 : ""
+            );
+            document.addEventListener("mousemove", (e) => {
+                this.moveCursor(e);
+            });
+            document.addEventListener("mouseleave", () =>
+                this.cursor ? this.cursor.style.opacity = 0 : ""
+            );
+        } else {
+            document.body.style.cursor = "default"
+            if (this.cursor) {
+                this.cursor.style.display = "none"
+            }
+        }
+    }
     revert() {
         document.body.style.cursor = "auto";
-        document.removeEventListener("mousemove", this.handleMouseMove);
-        document.removeEventListener("mousemove", this.handleMagnetMove);
-        window.removeEventListener("resize", this.handleResize);
-        this.magnetElement.forEach((refs) => {
-            gsap.set(refs, {
-                x: 0,
-                y: 0,
-            });
+        document.removeEventListener("mouseenter", () =>
+            this.cursor ? (this.cursor.style.opacity = 1) : ""
+        );
+        document.removeEventListener("mousemove", (e) => {
+            this.moveCursor(e);
         });
+        document.removeEventListener("mouseleave", () =>
+            this.cursor ? (this.cursor.style.opacity = 0) : ""
+        );
         this.magnetElement = [];
-        if (this.cursor) {
-            gsap.killTweensOf(this.cursor);
-            this.cursor.style.opacity = "";
-            this.cursor.style.display = "";
-        }
+        document.removeEventListener("mousemove", (e) => this.magneticEffect(e));
+        this.isMagnetActive = null;
+        window.removeEventListener("resize", () => this.setPerformance())
     }
 }
 
